@@ -1,0 +1,40 @@
+.sign-in-form {
+  background-color: #25489c;
+  border: white 2px solid;
+  padding: 25px;
+  color: white;
+  font-family: "Bebas Neue", cursive;
+  width: 40% !important;
+  border-radius: 5px;
+  margin-top: 30%;
+}
+
+.sign-in-form .form-group-item {
+  margin-bottom: 10px;
+}
+
+.form-button-area {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.form-button {
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 20px !important;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  color: #25489c !important;
+  background-color: white !important;
+}
+
+.form-button:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
