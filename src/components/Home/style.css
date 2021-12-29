@@ -1,5 +1,8 @@
+@import './CreateGame/style.css';
+
 .home {
   width: 90%;
+  margin-top: 20px;
 }
 
 /* M E N U   O P T I O N S  */
@@ -41,8 +44,9 @@
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
+  padding: 10px;
 }
 
 .active-game-header {
@@ -58,4 +62,121 @@
   display: flex;
   width: 100%;
   font-size: 35px;
+  cursor: pointer;
+}
+
+.active-game-location {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.active-game-join {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: var(--blue);
+  border-radius: 5px;
+  padding: 5px 25px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.active-game-join:hover {
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+}
+
+.active-game-created-by {
+  border-top: 1px solid white;
+  padding-top: 10px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+.active-game-buttons span {
+  margin: 0 5px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.active-game-buttons span:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--blue);
+}
+
+.active-game-players {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  gap: 5px;
+}
+
+.active-game-players .active-game-badges,
+.active-game-badges-status {
+  color: var(--blue);
+  padding: 1px 4px;
+  font-size: 14px;
+  margin: 0 5px 0 0;
+  background-color: white;
+}
+
+.active-game-players .active-game-badges-status:hover {
+  cursor: pointer;
+  background-color: var(--blue);
+  color: white;
+}
+
+.active-game-players .active-game-badges span:last-child {
+  font-size: 25px;
+}
+
+.active-game-players .active-game-badges-status span:last-child {
+  font-size: 25px;
+}
+
+.modal .modal-body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.active-game-delete-modal {
+  background-color: var(--blue);
+  color: white;
+  font-family: var(--form-font);
+  border: white 2px solid;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.delete-modal-buttons span {
+  background-color: var(--blue);
+  color: white;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
 }

@@ -1,7 +1,13 @@
-import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Container } from 'react-bootstrap'
+import ActiveGameDeleteModal from './ActiveGameDeleteModal'
 
 function ActiveGames() {
+
+    const [modalShow, setModalShow] = useState(false)
+    const [join, setJoin] = useState(false)
+    const [host, setHost] = useState(false)
+
     return (
         <Container className='active-game'>
             <div className='active-game-header'>
@@ -13,18 +19,44 @@ function ActiveGames() {
                 <span>19:00</span>
             </div>
             <div className='active-game-location'>
-                <span>Location: EPH SPORTS CENTER</span>
+                <span>EPH SPORTS CENTER</span>
             </div>
-            <div className='active-game-players'>
-                <span>Players: 8</span>
-            </div>
-            <div className='active-game-players'>
-                <span>Room #: 6</span>
+            <div className='active-game-join'>
+                {
+                    !join
+                        ?
+                        <span>JOIN</span>
+                        :
+                        <span>LEAVE</span>
+                }
             </div>
             <div className='active-game-created-by'>
-                <span>Vahag Rapyan</span>
+                <div className='active-game-players'>
+                    <div className='active-game-badges'>
+                        <span>players|</span>
+                        <span>8</span>
+                    </div>
+                    <div className='active-game-badges'>
+                        <span>Room | </span>
+                        <span>6</span>
+                    </div>
+                    <div className='active-game-badges-status'>
+                        <span>View</span>
+                        <span>Status</span>
+                    </div>
+                </div>
+                {host &&
+                    <div className='active-game-buttons mt-2'>
+                        <span>Edit</span>
+                        <span onClick={() => setModalShow(true)}>Delete</span>
+                    </div>
+                }
+                <span>Hosted by Vahag Rapyan</span>
             </div>
-
+            <ActiveGameDeleteModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </Container>
     )
 }
