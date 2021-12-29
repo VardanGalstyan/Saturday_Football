@@ -3,8 +3,8 @@
   color: var(--white);
   font-family: var(--form-font);
   border: 3px solid white;
-  height: 90vh;
-  width: 100%;
+  height: 750px;
+  width: 330px !important;
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -37,12 +37,12 @@
 
 .pitch-side-one-central-circle {
   position: absolute;
-  height: 42%;
-  width: 45%;
+  height: 165px;
+  width: 165px;
   border: 3px solid white;
-  bottom: -80px;
+  bottom: -82px;
   border-radius: 50%;
-  left: 28%;
+  left: 82px;
 }
 
 .pitch-side-one-goalkeeper-circle {
@@ -57,12 +57,12 @@
 
 .pitch-side-two-central-circle {
   position: absolute;
-  height: 42%;
-  width: 45%;
+  height: 165px;
+  width: 165px;
   border: 3px solid white;
-  top: -75px;
+  top: -82px;
   border-radius: 50%;
-  left: 28%;
+  left: 82px;
 }
 
 .pitch-side-two-goalkeeper-circle {
@@ -73,4 +73,34 @@
   bottom: -34%;
   border-radius: 44%;
   left: 10%;
+}
+
+.pitch-side-two-goalkeeper-circle:hover {
+  background-color: rgba(251, 247, 251, 0.137);
+}
+.pitch-side-one-goalkeeper-circle:hover {
+  background-color: rgba(251, 247, 251, 0.137);
+}
+.pitch-side-one-central-circle:hover {
+  background-color: rgba(251, 247, 251, 0.137);
+}
+.pitch-side-two-central-circle:hover {
+  background-color: rgba(251, 247, 251, 0.137);
+}
+
+.main-pitch-tshirt {
+  font-size: 55px;
+  color: white;
+  position: relative;
+  width: 100%;
+  width: 100px;
+}
+
+
+.shirt-holder-name {
+  font-size: 14px;
+  position: absolute;
+  left: 38%;
+  top: 30%;
+  color: black;
 }
