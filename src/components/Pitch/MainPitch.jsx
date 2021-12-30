@@ -1,7 +1,8 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import './style.css'
-import { IoShirtSharp } from 'react-icons/io5'
+import Tshirt from './Tshirt'
+
 
 function MainPitch() {
     return (
@@ -12,9 +13,19 @@ function MainPitch() {
                     </div>
                     <div className='pitch-side-one-goalkeeper-circle'>
                     </div>
-                    <div className='main-pitch-tshirt'>
-                        <IoShirtSharp />
-                        <span className='shirt-holder-name'>David</span>
+                    <div className='formation-six-players'>
+                        <Col className='formation-goalkeeper'>
+                            <Tshirt />
+                        </Col>
+                        <Col className='formation-defence'>
+                            <Tshirt />
+                            <Tshirt />
+                            <Tshirt />
+                        </Col>
+                        <Col className='formation-offence'>
+                            <Tshirt />
+                            <Tshirt />
+                        </Col>
                     </div>
                 </Col>
                 <Col className='pitch-side-two'>
@@ -23,6 +34,20 @@ function MainPitch() {
                     </div>
                     <div className='pitch-side-two-goalkeeper-circle'>
 
+                    </div>
+                    <div className='formation-six-players'>
+                        <Col className='formation-offence'>
+                            <Tshirt />
+                            <Tshirt />
+                        </Col>
+                        <Col className='formation-defence'>
+                            <Tshirt />
+                            <Tshirt />
+                            <Tshirt />
+                        </Col>
+                        <Col className='formation-goalkeeper'>
+                            <Tshirt />
+                        </Col>
                     </div>
                 </Col>
             </Row>

@@ -8,10 +8,10 @@ import MainPitch from '../Pitch/MainPitch'
 function Home() {
     return (
         <div className='home'>
-            {/* <MenuOption />
+            <MenuOption />
             <ActiveGames />
-            <NewGame /> */}
-            <MainPitch />
+            <NewGame />
+            {/* <MainPitch /> */}
         </div>
     )
 }

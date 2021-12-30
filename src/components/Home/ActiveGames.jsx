@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
 import ActiveGameDeleteModal from './ActiveGameDeleteModal'
+import PlayersModal from './Players/PlayersModal'
+import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
 
 function ActiveGames() {
 
     const [modalShow, setModalShow] = useState(false)
+    const [showPlayersModal, setShowPlayersModal] = useState(false)
+    const [showStatusModal, setShowStatusModal] = useState(false)
     const [join, setJoin] = useState(false)
     const [host, setHost] = useState(false)
 
@@ -32,7 +36,10 @@ function ActiveGames() {
             </div>
             <div className='active-game-created-by'>
                 <div className='active-game-players'>
-                    <div className='active-game-badges'>
+                    <div
+                        className='active-game-badges-players'
+                        onClick={() => setShowPlayersModal(true)}
+                    >
                         <span>players|</span>
                         <span>8</span>
                     </div>
@@ -40,7 +47,10 @@ function ActiveGames() {
                         <span>Room | </span>
                         <span>6</span>
                     </div>
-                    <div className='active-game-badges-status'>
+                    <div
+                        className='active-game-badges-status'
+                        onClick={() => setShowStatusModal(true)}
+                    >
                         <span>View</span>
                         <span>Status</span>
                     </div>
@@ -57,6 +67,15 @@ function ActiveGames() {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
+            <PlayersModal
+                show={showPlayersModal}
+                onHide={() => setShowPlayersModal(false)}
+            />
+            <StatusUpdateModal
+                show={showStatusModal}
+                onHide={() => setShowStatusModal(false)}
+            />
+
         </Container>
     )
 }

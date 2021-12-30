@@ -25,6 +25,11 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .pitch-side-two {
@@ -88,19 +93,60 @@
   background-color: rgba(251, 247, 251, 0.137);
 }
 
-.main-pitch-tshirt {
+/* S H I R T S */
+
+.pitch-side-one .main-pitch-tshirt {
   font-size: 55px;
-  color: white;
+  color: rgb(198, 151, 209);
   position: relative;
   width: 100%;
   width: 100px;
 }
 
+.pitch-side-two .main-pitch-tshirt {
+  font-size: 55px;
+  color: rgb(165, 164, 233);
+  position: relative;
+  width: 100%;
+  width: 100px;
+}
 
 .shirt-holder-name {
   font-size: 14px;
   position: absolute;
-  left: 38%;
+  left: 37%;
   top: 30%;
-  color: black;
+  color: white;
+}
+
+/* F O R M A T I O N */
+
+.formation-six-players {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.formation-goalkeeper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+.formation-defence {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+.formation-offence {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
