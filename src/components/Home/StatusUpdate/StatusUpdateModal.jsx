@@ -11,15 +11,26 @@ function StatusUpdateModal(props) {
 
 
     const handleRandomize = () => {
-        let myArrayWithNoDuplicates = players.reduce(function (previousValue, currentValue) {
-            if (previousValue.indexOf(currentValue) === -1) {
-                previousValue.push(currentValue)
-            }
-            return previousValue
-        }, [])
-
-        console.log(myArrayWithNoDuplicates)
+        setTeams(chunkArray(players, teamValue))
     }
+
+    function chunkArray(arr, n) {
+        let chunkLength = Math.max(arr.length / n, 1);
+        let chunks = [];
+        let randomArray = arr[Math.floor(Math.random() * arr.length)]
+        arr.forEach((x, i) =>
+            (chunkLength * (i + 1) <= arr.length)
+            && chunks
+                .push(arr
+                    .slice(chunkLength * i, chunkLength * (i + 1))));
+        // for (let i = 0; i < n; i++) { // loop twice
+        //     if (chunkLength * (i + 1) <= arr.length)
+        //         chunks.push(arr.slice(chunkLength * i, chunkLength * (i + 1)));
+        // }
+        return chunks;
+    }
+
+
 
 
     return (
