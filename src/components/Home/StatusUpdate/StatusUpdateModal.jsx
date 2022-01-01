@@ -1,36 +1,62 @@
 import React, { useState } from 'react'
-import { Modal, Button, Col, Form } from 'react-bootstrap'
+import { Modal, Button, Form } from 'react-bootstrap'
 import TeamItem from './TeamItem'
 
 function StatusUpdateModal(props) {
 
-    const players = ['John Doe', 'Jane Doe', 'Jack Doe', 'Jill Doe', "Brian O'Connor", 'Andre Craig', 'Barrack Obama', "Elon Musk", 'William Def']
+    const players = ['John Doe', 'Jane Doe', 'Jack Doe', 'Jill Doe', 'Andre Craig', 'Barrack Obama', "Elon Musk", 'William Def', "Brian O'Connor"]
 
     const [teamValue, setTeamValue] = useState(0)
-    const [teams, setTeams] = useState({})
+    const [teams, setTeams] = useState([])
 
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
 
-    const handleRandomize = () => {
-        setTeams(chunkArray(players, teamValue))
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
     }
 
     function chunkArray(arr, n) {
         let chunkLength = Math.max(arr.length / n, 1);
         let chunks = [];
-        let randomArray = arr[Math.floor(Math.random() * arr.length)]
         arr.forEach((x, i) =>
             (chunkLength * (i + 1) <= arr.length)
             && chunks
                 .push(arr
                     .slice(chunkLength * i, chunkLength * (i + 1))));
-        // for (let i = 0; i < n; i++) { // loop twice
-        //     if (chunkLength * (i + 1) <= arr.length)
-        //         chunks.push(arr.slice(chunkLength * i, chunkLength * (i + 1)));
-        // }
         return chunks;
     }
 
+    const handleRandomize = () => {
+        setTeams(chunkArray(players, teamValue))
+    }
 
+    const handleShuffle = () => {
+        shuffle(players)
+        setTeams(chunkArray(players, teamValue))
+    }
+
+    const handleClose = () => {
+        props.onHide()
+        setTeams([])
+        setTeamValue(0)
+    }
+
+    const handleClear = () => {
+        setTeams([])
+        setTeamValue(0)
+    }
 
 
     return (
@@ -57,9 +83,9 @@ function StatusUpdateModal(props) {
                     {
                         teamValue === null ?
                             <span>Select Number of Teams</span> :
-                            [...Array(parseInt(teamValue))].map((item, index) => {
+                            teams.map((players, index) => {
                                 return (
-                                    <TeamItem key={index} index={index} />
+                                    <TeamItem key={index} players={players} index={index} />
                                 )
                             })
                     }
@@ -74,6 +100,7 @@ function StatusUpdateModal(props) {
                                     value={teamValue}
                                     onChange={(e) => setTeamValue(e.target.value)}
                                 >
+                                    <option>0</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
@@ -83,20 +110,19 @@ function StatusUpdateModal(props) {
                             </Form.Group>
                         </div>
                         <div className='random-select-button mr-1'>
-                            <span>Generate Teams</span>
+                            <span onClick={handleRandomize}>Generate Teams</span>
                         </div>
                         <div className='random-select-button'>
                             <span
-                                onClick={handleRandomize}
-                            >Randomize</span>
+                                onClick={handleShuffle}
+                            >Shuffle</span>
                         </div>
                     </div>
                     <div>
                         <div className='random-select-button'>
-                            <span>Clear</span>
+                            <span onClick={handleClear}>Clear</span>
                         </div>
                     </div>
-
                 </div>
             </Modal.Body>
             <Modal.Footer>
@@ -107,7 +133,7 @@ function StatusUpdateModal(props) {
                     Play</Button>
                 <Button
                     className='form-button'
-                    onClick={props.onHide}
+                    onClick={handleClose}
                 >
                     Close
                 </Button>

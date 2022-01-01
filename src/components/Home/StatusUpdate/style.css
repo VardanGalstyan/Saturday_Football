@@ -2,6 +2,10 @@
   font-family: var(--form-font);
 }
 
+.status-update-modal .modal-content {
+  background-color: var(--blue);
+}
+
 .status-update-modal .modal-footer {
   background-color: var(--blue);
 }
@@ -10,10 +14,13 @@
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .status-update-item {
-  border: 1px solid var(--blue);
+  color: var(--blue);
+  background-color: var(--white);
   padding: 2px 5px;
   margin: 3px;
   border-radius: 3px;
@@ -21,30 +28,32 @@
 
 .teams-divided {
   display: flex;
-  border-top: 3px solid var(--blue);
+  border-top: 1px solid rgba(255, 255, 255, 0.767);
   margin-top: 10px;
   padding: 5px;
+  background-color: var(--blue);
+  color: var(--white);
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .team-container {
-  border: 1px solid rgba(0, 0, 0, 0.109);
   padding: 10px 0;
   margin: 3px 1px;
 }
 
 .random-select-button {
-  background-color: var(--blue);
-  color: white;
+  background-color: white;
+  color: var(--blue);
   padding: 3px 10px;
   border-radius: 3px;
   cursor: pointer;
 }
 
 .random-select-button:hover {
-  background-color: white;
-  color: var(--blue);
+  background-color: var(--blue);
+  color: white;
 }
 
 .team-container-player-item span {
@@ -52,8 +61,10 @@
 }
 
 .player-status-control-line {
-  border-top: 3px solid var(--blue);
-  padding: 5px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.767);
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
@@ -63,13 +74,13 @@
 }
 
 .status-update-modal .modal-footer {
-  background-color: white;
-  color: var(--blue);
+  background-color: var(--blue);
+  color: white;
   padding: 0;
   display: flex;
   justify-content: space-between;
 }
 
 .status-update-modal .modal-footer .form-button {
-  color: var(--blue);
+  color: white;
 }
