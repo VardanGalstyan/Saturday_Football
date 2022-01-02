@@ -43,8 +43,10 @@ function StatusUpdateModal(props) {
     }
 
     const handleShuffle = () => {
-        shuffle(players)
-        setTeams(chunkArray(players, teamValue))
+        if (teams.length >= 2) {
+            shuffle(players)
+            setTeams(chunkArray(players, teamValue))
+        }
     }
 
     const handleClose = () => {
@@ -79,13 +81,23 @@ function StatusUpdateModal(props) {
                         })
                     }
                 </div>
-                <div className='teams-divided'>
+                <div
+                    className={`teams-divided`}
+
+                >
                     {
                         teamValue === null ?
                             <span>Select Number of Teams</span> :
                             teams.map((players, index) => {
                                 return (
-                                    <TeamItem key={index} players={players} index={index} />
+                                    <TeamItem
+                                        key={index}
+                                        players={players}
+                                        index={index}
+                                        id={`team-${index + 1}`}
+                                        teamUpdates={(value) => setTeams(value)}
+                                        teams={teams}
+                                    />
                                 )
                             })
                     }

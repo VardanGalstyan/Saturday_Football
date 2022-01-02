@@ -74,6 +74,7 @@ function ActiveGames() {
             <StatusUpdateModal
                 show={showStatusModal}
                 onHide={() => setShowStatusModal(false)}
+
             />
 
         </Container>
