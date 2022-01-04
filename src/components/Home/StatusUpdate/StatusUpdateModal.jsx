@@ -1,44 +1,22 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
+import { chunkArray, shuffle } from '../../../utilities/status-utils.js'
+import { DragDropContext } from 'react-beautiful-dnd'
+import { players } from '../../../initial-data.js'
+import TopMemberList from './TopMemberList'
 import TeamItem from './TeamItem'
 
 function StatusUpdateModal(props) {
 
-    const players = ['John Doe', 'Jane Doe', 'Jack Doe', 'Jill Doe', 'Andre Craig', 'Barrack Obama', "Elon Musk", 'William Def', "Brian O'Connor"]
-
-    const [teamValue, setTeamValue] = useState(0)
+    const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
 
-    function shuffle(array) {
-        let currentIndex = array.length, randomIndex;
 
-        // While there remain elements to shuffle...
-        while (currentIndex !== 0) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-
-            // And swap it with the current element.
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex], array[currentIndex]];
+    const handleGenerate = () => {
+        if (teams.length > 1 && teamValue !== teams.length) {
+            setTeamValue([])
+            setTeams(chunkArray(players, teamValue))
         }
-
-        return array;
-    }
-
-    function chunkArray(arr, n) {
-        let chunkLength = Math.max(arr.length / n, 1);
-        let chunks = [];
-        arr.forEach((x, i) =>
-            (chunkLength * (i + 1) <= arr.length)
-            && chunks
-                .push(arr
-                    .slice(chunkLength * i, chunkLength * (i + 1))));
-        return chunks;
-    }
-
-    const handleRandomize = () => {
         setTeams(chunkArray(players, teamValue))
     }
 
@@ -71,37 +49,24 @@ function StatusUpdateModal(props) {
         >
             <Modal.Body>
                 <div className='player-status-container'>
-                    {
-                        players.map((player, index) => {
-                            return (
-                                <div className='status-update-item' key={index}>
-                                    <span>{player}</span>
-                                </div>
-                            )
-                        })
-                    }
+                    {players.map((player) => <TopMemberList player={player} key={player.id} />)}
                 </div>
-                <div
-                    className={`teams-divided`}
-
+                <DragDropContext
+                    onDragEnd={(result) => { }}
                 >
-                    {
-                        teamValue === null ?
-                            <span>Select Number of Teams</span> :
-                            teams.map((players, index) => {
-                                return (
-                                    <TeamItem
-                                        key={index}
-                                        players={players}
-                                        index={index}
-                                        id={`team-${index + 1}`}
-                                        teamUpdates={(value) => setTeams(value)}
-                                        teams={teams}
-                                    />
-                                )
-                            })
-                    }
-                </div>
+                    <div className={`teams-divided`}>
+                        {
+                            teams.map((team, index) => (
+                                <TeamItem
+                                    key={index}
+                                    team={team}
+                                    index={index}
+                                    id={`team-${index}`}
+                                />
+                            ))
+                        }
+                    </div>
+                </DragDropContext>
                 <div className='player-status-control-line'>
                     <div className='d-flex'>
                         <div className='number-of-teams mr-1'>
@@ -122,7 +87,7 @@ function StatusUpdateModal(props) {
                             </Form.Group>
                         </div>
                         <div className='random-select-button mr-1'>
-                            <span onClick={handleRandomize}>Generate Teams</span>
+                            <span onClick={handleGenerate}>Generate Teams</span>
                         </div>
                         <div className='random-select-button'>
                             <span
@@ -150,7 +115,7 @@ function StatusUpdateModal(props) {
                     Close
                 </Button>
             </Modal.Footer>
-        </Modal>
+        </Modal >
     )
 }
 
