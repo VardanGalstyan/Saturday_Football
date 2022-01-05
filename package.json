@@ -12,8 +12,10 @@
     "react-bootstrap": "^2.0.4",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-spinners": "^0.11.0",
+    "uninstall": "0.0.0",
     "uniqid": "^5.4.0",
     "web-vitals": "^2.1.2"
   },
