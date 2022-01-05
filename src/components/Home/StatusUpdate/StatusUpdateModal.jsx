@@ -14,10 +14,11 @@ function StatusUpdateModal(props) {
 
     const handleGenerate = () => {
         if (teams.length > 1 && teamValue !== teams.length) {
-            setTeamValue([])
+            setTeams([])
+            setTeams(chunkArray(players, teamValue))
+        } else {
             setTeams(chunkArray(players, teamValue))
         }
-        setTeams(chunkArray(players, teamValue))
     }
 
     const handleShuffle = () => {
@@ -38,6 +39,61 @@ function StatusUpdateModal(props) {
         setTeamValue(0)
     }
 
+    const onDragEnd = result => {
+        const { destination, source, draggableId } = result
+        if (!destination) {
+            return
+        }
+        if (destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return
+        }
+
+        if (destination.droppableId === source.droppableId &&
+            destination.index !== source.index) {
+
+            const draggableTeam = teams.find(team => team.team_id === source.droppableId)
+            const newTeamPlayers = [...draggableTeam.players]
+
+            const [removed] = newTeamPlayers.splice(source.index, 1)
+            newTeamPlayers.splice(destination.index, 0, removed)
+
+
+            setTeams(teams.map(team => {
+                if (team.team_id === source.droppableId) {
+                    return { ...team, players: newTeamPlayers }
+                }
+                return team
+            }))
+        }
+
+        if (destination.droppableId !== source.droppableId) {
+            const draggableTeam = teams.find(team => team.team_id === source.droppableId)
+            const droppableTeam = teams.find(team => team.team_id === destination.droppableId)
+            const newTeamPlayers = [...draggableTeam.players]
+            const newDroppableTeamPlayers = [...droppableTeam.players]
+            const [removed] = newTeamPlayers.splice(source.index, 1)
+            newDroppableTeamPlayers.splice(destination.index, 0, removed)
+
+
+            const newTeams = teams.map(team => {
+                if (team.team_id === source.droppableId) {
+                    return { ...team, players: newTeamPlayers }
+                }
+                if (team.team_id === destination.droppableId) {
+                    return { ...team, players: newDroppableTeamPlayers }
+                }
+                return team
+            })
+
+            setTeams(newTeams)
+        }
+
+
+    }
+
+
 
     return (
         <Modal
@@ -52,16 +108,16 @@ function StatusUpdateModal(props) {
                     {players.map((player) => <TopMemberList player={player} key={player.id} />)}
                 </div>
                 <DragDropContext
-                    onDragEnd={(result) => { }}
+                    onDragEnd={onDragEnd}
                 >
                     <div className={`teams-divided`}>
                         {
                             teams.map((team, index) => (
                                 <TeamItem
-                                    key={index}
-                                    team={team}
+                                    key={team.team_id}
+                                    team={team.players}
                                     index={index}
-                                    id={`team-${index}`}
+                                    id={team.team_id}
                                 />
                             ))
                         }

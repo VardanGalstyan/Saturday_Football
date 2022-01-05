@@ -23,8 +23,10 @@ export function chunkArray(arr, n) {
     let chunks = [];
     arr.forEach((x, i) =>
         (chunkLength * (i + 1) <= arr.length)
-        && chunks
-            .push(arr
-                .slice(chunkLength * i, chunkLength * (i + 1))));
+        && chunks.push({
+            players: arr.slice(chunkLength * i, chunkLength * (i + 1)),
+            team_id: (i + 1).toString()
+        })
+    );
     return chunks;
 }

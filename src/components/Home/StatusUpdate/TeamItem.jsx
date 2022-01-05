@@ -8,9 +8,9 @@ function TeamItem(props) {
     return (
         <Col xs={5} className='team-container'>
             <div className='team-container-header' >
-                Team {props.index + 1}
+                Team {props.id}
             </div>
-            <Droppable droppableId={props.id} >
+            <Droppable droppableId={props.id.toString()} >
                 {provided => (
                     <div
                         ref={provided.innerRef}
