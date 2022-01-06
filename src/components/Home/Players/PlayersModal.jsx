@@ -3,6 +3,9 @@ import { Modal, Button } from 'react-bootstrap'
 import { IoShirtSharp } from 'react-icons/io5'
 
 function PlayersModal(props) {
+
+    const { players } = props
+
     return (
         <Modal
             {...props}
@@ -13,18 +16,14 @@ function PlayersModal(props) {
         >
             <Modal.Body>
                 <div className='players-joined'>
-                    <div className='players-joined-item'>
-                        <span><IoShirtSharp /></span>
-                        <span>Arsen Harutyunyan</span>
-                    </div>
-                    <div className='players-joined-item'>
-                        <span><IoShirtSharp /></span>
-                        <span>Hakob Hakobyan</span>
-                    </div>
-                    <div className='players-joined-item'>
-                        <span><IoShirtSharp /></span>
-                        <span>Players Joined</span>
-                    </div>
+                    {
+                        players && players.map(player => (
+                            <div className='players-joined-item'>
+                                <span><IoShirtSharp /></span>
+                                <span>{player.full_name}</span>
+                            </div>
+                        ))
+                    }
                 </div>
             </Modal.Body>
             <Modal.Footer>

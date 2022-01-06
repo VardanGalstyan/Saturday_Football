@@ -78,14 +78,16 @@ function Login() {
                 <div className='form-button-area'>
                     {
                         loading ?
-                            <ClockLoader color={"#fff"} size={25} />
-                            :
-                            <Button
-                                type="submit"
-                                className='form-button'
-                            >
-                                SIGN UP
-                            </Button>
+                            <ClockLoader color={"#fff"} size={25} /> :
+                            error ?
+                                <span>shit happens</span>
+                                :
+                                <Button
+                                    type="submit"
+                                    className='form-button'
+                                >
+                                    SIGN UP
+                                </Button>
                     }
                 </div>
             </Form>

@@ -15,8 +15,8 @@ function ActiveGameDeleteModal(props) {
                         ARE YOU SURE YOU WANT TO DELETE THIS GAME?
                     </span>
                     <div className='delete-modal-buttons'>
-                        <span>Yes</span>
-                        <span>No</span>
+                        <span onClick={props.handleDelete}>Yes</span>
+                        <span onClick={props.onHide}>No</span>
                     </div>
                 </div>
             </Modal.Body>

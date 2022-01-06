@@ -3,7 +3,7 @@ import { VscAdd } from 'react-icons/vsc'
 import CreateGameModal from './CreateGameModal'
 import { Container } from 'react-bootstrap'
 
-function NewGame() {
+function NewGame(props) {
 
     const [modalShow, setModalShow] = useState(false)
 
@@ -23,6 +23,7 @@ function NewGame() {
             <CreateGameModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                handleFetch={props.handleFetch}
             />
         </Container >
     )
