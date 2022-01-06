@@ -38,3 +38,10 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+@media screen and (max-width: 768px) {
+  .sign-in-form {
+    width: 80% !important;
+    margin-top: 50%;
+  }
+}

@@ -1,35 +1,31 @@
 import React, { useState } from 'react'
 import { VscAdd } from 'react-icons/vsc'
 import CreateGameModal from './CreateGameModal'
+import { Container } from 'react-bootstrap'
 
-function NewGame() {
+function NewGame(props) {
 
-    const [newGame, setNewGame] = useState(false)
     const [modalShow, setModalShow] = useState(false)
 
     return (
-        <div
-            onMouseEnter={() => setNewGame(true)}
-            onMouseLeave={() => setNewGame(false)}
-            className='create-new-game active-game'
-        >
-            {
-                !newGame
-                    ?
-                    <span>Shall we play ?</span>
-                    :
-                    <span
-                        onClick={() => setModalShow(true)}
-                    >
-                        <VscAdd />
-                    </span>
-            }
-
+        <Container className='create-new-game active-game' >
+            <div
+                className='d-flex'
+                onClick={() => setModalShow(true)}
+            >
+                <span> New Game </span>
+                <span
+                    className='ml-2'
+                >
+                    <VscAdd />
+                </span>
+            </div>
             <CreateGameModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                handleFetch={props.handleFetch}
             />
-        </div>
+        </Container >
     )
 }
 
