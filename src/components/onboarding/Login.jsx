@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ClockLoader } from "react-spinners";
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap'
+import { RiErrorWarningFill } from 'react-icons/ri'
 
 
 function Login() {
@@ -44,6 +45,11 @@ function Login() {
         }
     }
 
+    const handleError = () => {
+        setError(false)
+        setPlayer(initialState)
+    }
+
 
     return (
         <div className='sign-in-form'>
@@ -67,14 +73,16 @@ function Login() {
                 <div className='form-button-area'>
                     {
                         loading ?
-                            <ClockLoader color={"#fff"} size={25} />
-                            :
-                            <Button
-                                type="submit"
-                                className='form-button'
-                            >
-                                SIGN IN
-                            </Button>
+                            <ClockLoader color={"#fff"} size={25} /> :
+                            error ?
+                                <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
+                                :
+                                <Button
+                                    type="submit"
+                                    className='form-button'
+                                >
+                                    SIGN IN
+                                </Button>
                     }
                 </div>
             </Form>

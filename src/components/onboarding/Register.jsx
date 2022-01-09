@@ -1,8 +1,9 @@
+import './style.css'
 import React, { useState } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { ClockLoader } from "react-spinners";
-import './style.css'
+import { RiErrorWarningFill } from 'react-icons/ri'
 
 function Login() {
 
@@ -46,6 +47,10 @@ function Login() {
         }
     }
 
+    const handleError = () => {
+        setError(false)
+        setPlayer(initialState)
+    }
 
 
     return (
@@ -80,13 +85,13 @@ function Login() {
                         loading ?
                             <ClockLoader color={"#fff"} size={25} /> :
                             error ?
-                                <span>shit happens</span>
+                                <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
                                 :
                                 <Button
                                     type="submit"
                                     className='form-button'
                                 >
-                                    SIGN UP
+                                    Sign up
                                 </Button>
                     }
                 </div>
