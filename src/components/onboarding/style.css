@@ -29,8 +29,7 @@
 }
 
 .form-button:hover {
-  color: #25489c !important;
-  background-color: white !important;
+  color: rgba(255, 255, 255, 0.788) !important;
 }
 
 .form-button:focus {
@@ -44,4 +43,14 @@
     width: 80% !important;
     margin-top: 50%;
   }
+}
+
+.boarding-error {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.boarding-error svg {
+  margin-right: 5px;
+  font-size: 24px;
 }
