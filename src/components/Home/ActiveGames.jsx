@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
+// import { useTimer } from 'react-timer-hook';
+import { useDispatch, useSelector } from 'react-redux'
 import ActiveGameDeleteModal from './ActiveGameDeleteModal'
 import PlayersModal from './Players/PlayersModal'
 import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
+import { fillSessionData } from '../../Redux/Actions/actions';
+import Join from './StatusUpdate/Join'
 
 function ActiveGames(props) {
 
     const { game } = props
     const token = localStorage.getItem('footballAccessToken')
+    const dispatch = useDispatch()
 
 
+    const join = useSelector(state => state.user.data)
 
     // S T A T E S
-
     const [modalShow, setModalShow] = useState(false)
     const [showPlayersModal, setShowPlayersModal] = useState(false)
     const [showStatusModal, setShowStatusModal] = useState(false)
-    const [join, setJoin] = useState({})
+
 
     // D A T E  M E T H O D S
 
@@ -25,41 +30,11 @@ function ActiveGames(props) {
     let day = new Date(game.session_date);
     let dayName = days[day.getDay()];
 
+
     // H A N D L E R S
 
-    useEffect(() => {
-        handleMeFetch()
-
-    }, [])
-
-    const handleMeFetch = async () => {
-        const response = await fetch(`${process.env.REACT_APP_URL}/players/me`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        if (response.ok) {
-            const data = await response.json()
-            setJoin(data)
-        }
-    }
-
-    const isJoined = game.players.some(player => player._id === join._id)
     const isHost = game.host._id === join._id
 
-
-    const handleJoin = async () => {
-        const response = await fetch(`${process.env.REACT_APP_URL}/players/me/join/${game._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        if (response.ok) {
-            props.handleFetch()
-        }
-    }
 
     const handleDelete = async () => {
         try {
@@ -70,7 +45,7 @@ function ActiveGames(props) {
                 }
             })
             if (response.ok) {
-                props.handleFetch()
+                dispatch(fillSessionData())
             }
         } catch (error) {
 
@@ -91,15 +66,7 @@ function ActiveGames(props) {
             <div className='active-game-location'>
                 <span>{game.session_location}</span>
             </div>
-            <div className='active-game-join'>
-                {
-                    !isJoined
-                        ?
-                        <span onClick={handleJoin}>JOIN</span>
-                        :
-                        <span onClick={handleJoin}>LEAVE</span>
-                }
-            </div>
+            <Join game={game} token={token} join={join} />
             <div className='active-game-created-by'>
                 <div className='active-game-players'>
                     <div

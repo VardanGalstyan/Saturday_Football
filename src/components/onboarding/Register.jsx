@@ -52,7 +52,6 @@ function Login() {
         setPlayer(initialState)
     }
 
-
     return (
         <Container className='sign-in-form'>
             <Form onSubmit={handleSubmit}>
@@ -85,12 +84,12 @@ function Login() {
                         loading ?
                             <ClockLoader color={"#fff"} size={25} /> :
                             error ?
-                                <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
+                                <span onClick={handleError} className='boarding-error'>
+                                    <RiErrorWarningFill />
+                                    Invalid Credentials
+                                </span>
                                 :
-                                <Button
-                                    type="submit"
-                                    className='form-button'
-                                >
+                                <Button type="submit" className='form-button'>
                                     Sign up
                                 </Button>
                     }

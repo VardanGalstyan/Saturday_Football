@@ -1,19 +1,26 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
 import { ClockLoader } from "react-spinners";
+import { useDispatch } from 'react-redux'
+import { fillSessionData } from '../../../Redux/Actions/actions'
+import { RiErrorWarningFill } from 'react-icons/ri'
 
 function CreateGameModal(props) {
+
+    const dispatch = useDispatch()
 
     const initialState = {
         session_date: '',
         session_time: '',
         session_location: '',
         changing_room: '',
+
     }
     const token = localStorage.getItem('footballAccessToken');
     const [data, setData] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,11 +35,10 @@ function CreateGameModal(props) {
                 body: JSON.stringify(data)
             })
             if (response.ok) {
-                const data = await response.json()
                 setLoading(false)
                 setError(false)
                 setData(initialState)
-                props.handleFetch()
+                dispatch(fillSessionData())
                 props.onHide()
             } else {
                 setLoading(false)
@@ -40,7 +46,8 @@ function CreateGameModal(props) {
             }
 
         } catch (error) {
-            console.log(error)
+            setLoading(false)
+            setError(true)
         }
     }
 
@@ -48,6 +55,13 @@ function CreateGameModal(props) {
         props.onHide()
         setData(initialState)
     }
+
+    const handleError = () => {
+        setError(false)
+        setData(initialState)
+    }
+
+
 
     return (
         <Modal
@@ -107,14 +121,13 @@ function CreateGameModal(props) {
                 </Button>
                 {
                     loading ?
-                        <ClockLoader color={"#fff"} size={25} />
-                        :
-                        <Button
-                            type="submit"
-                            className='form-button'
-                            onClick={(e) => handleSubmit(e)}>
-                            SIGN UP
-                        </Button>
+                        <ClockLoader color={"#fff"} size={25} /> :
+                        error ?
+                            <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
+                            :
+                            <Button type="submit" className='form-button'>
+                                NEW GAME
+                            </Button>
                 }
             </Modal.Footer>
         </Modal>

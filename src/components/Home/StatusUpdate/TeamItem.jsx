@@ -21,7 +21,7 @@ function TeamItem(props) {
 
                         {props.team.map((player, index) => (
                             <TeamSingleItem
-                                key={player.id}
+                                key={player._id}
                                 index={index}
                                 player={player}
                             />

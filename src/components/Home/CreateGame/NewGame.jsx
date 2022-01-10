@@ -23,7 +23,6 @@ function NewGame(props) {
             <CreateGameModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-                handleFetch={props.handleFetch}
             />
         </Container >
     )

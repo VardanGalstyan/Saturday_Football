@@ -18,7 +18,7 @@ function PlayersModal(props) {
                 <div className='players-joined'>
                     {
                         players && players.map(player => (
-                            <div className='players-joined-item'>
+                            <div key={player._id} className='players-joined-item'>
                                 <span><IoShirtSharp /></span>
                                 <span>{player.full_name}</span>
                             </div>
@@ -27,10 +27,7 @@ function PlayersModal(props) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    className='form-button'
-                    onClick={props.onHide}
-                >
+                <Button className='form-button' onClick={props.onHide}>
                     Close
                 </Button>
             </Modal.Footer>
