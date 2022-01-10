@@ -1,49 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import './style.css'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ActiveGames from './ActiveGames'
 import NewGame from './CreateGame/NewGame'
-import './style.css'
-import MainPitch from '../Pitch/MainPitch'
+// import MainPitch from '../Pitch/MainPitch'
 
 function Home() {
 
-    const [activeGames, setActiveGames] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const activeGames = useSelector(state => state.sessions.data)
 
-
-
-    useEffect(() => {
-        handleActiveFetch()
-    }, [])
-
-    const handleActiveFetch = async () => {
-        try {
-            setIsLoading(true)
-            const response = await fetch(`${process.env.REACT_APP_URL}/sessions`)
-            if (response) {
-                const data = await response.json()
-                setActiveGames(data)
-                setIsLoading(false)
-            } else {
-                setError(true)
-                setIsLoading(false)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
 
     return (
         <div className='home'>
-            {activeGames && activeGames.map(game => (
-                <ActiveGames
-                    key={game._id}
-                    game={game}
-                    handleFetch={() => handleActiveFetch()}
-                />
-            ))}
-            <NewGame handleFetch={() => handleActiveFetch()} />
+            {activeGames && activeGames.map(game => <ActiveGames key={game._id} game={game} />)}
+            <NewGame />
             {/* <MainPitch /> */}
         </div>
     )

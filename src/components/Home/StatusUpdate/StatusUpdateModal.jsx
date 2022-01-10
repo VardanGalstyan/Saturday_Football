@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { chunkArray, shuffle } from '../../../utilities/status-utils.js'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { players } from '../../../initial-data.js'
+// import { players } from '../../../initial-data.js'
+import { useSelector } from 'react-redux'
 import TopMemberList from './TopMemberList'
 import TeamItem from './TeamItem'
 
 function StatusUpdateModal(props) {
 
+
+    const players = useSelector(state => state.players.data)
+
+    // S T A T E S
     const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
 
@@ -105,7 +110,7 @@ function StatusUpdateModal(props) {
         >
             <Modal.Body>
                 <div className='player-status-container'>
-                    {players.map((player) => <TopMemberList player={player} key={player.id} />)}
+                    {players.map((player) => <TopMemberList player={player} key={player._id} />)}
                 </div>
                 <DragDropContext
                     onDragEnd={onDragEnd}

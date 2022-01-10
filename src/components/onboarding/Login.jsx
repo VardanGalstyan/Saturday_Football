@@ -3,11 +3,14 @@ import { ClockLoader } from "react-spinners";
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap'
 import { RiErrorWarningFill } from 'react-icons/ri'
+import { useDispatch } from 'react-redux'
+import { fillUserData, fillSessionData } from '../../Redux/Actions/actions';
 
 
 function Login() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const initialState = {
         email: '',
@@ -17,6 +20,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [player, setPlayer] = useState(initialState);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,6 +37,8 @@ function Login() {
                 const data = await response.json();
                 localStorage.setItem('footballAccessToken', data.accessToken);
                 setLoading(false)
+                dispatch(fillSessionData())
+                dispatch(fillUserData(data.accessToken))
                 navigate('/home')
             } else {
                 setError(true)
@@ -58,6 +64,7 @@ function Login() {
                     <Form.Control
                         type="email"
                         placeholder="Enter email"
+                        autoComplete="email"
                         value={player.email}
                         onChange={(e) => setPlayer({ ...player, email: e.target.value })}
                     />
@@ -66,6 +73,7 @@ function Login() {
                     <Form.Control
                         type="password"
                         placeholder="Password"
+                        autoComplete='current-password'
                         value={player.password}
                         onChange={(e) => setPlayer({ ...player, password: e.target.value })}
                     />
@@ -75,7 +83,10 @@ function Login() {
                         loading ?
                             <ClockLoader color={"#fff"} size={25} /> :
                             error ?
-                                <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
+                                <span onClick={handleError} className='boarding-error'>
+                                    <RiErrorWarningFill />
+                                    Invalid Credentials
+                                </span>
                                 :
                                 <Button
                                     type="submit"

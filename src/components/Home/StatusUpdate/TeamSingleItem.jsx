@@ -6,17 +6,17 @@ function TeamSingleItem(props) {
     const { player, index } = props
 
     return (
-        <Draggable draggableId={player.id.toString()} index={index}>
+        <Draggable draggableId={player._id.toString()} index={index}>
             {(provided) => (
                 <div
                     className='team-player-item'
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    ref={provided.innerRef} 
+                    ref={provided.innerRef}
                 // ref={provided.innerRef}
                 >
                     <span className='single-player' >
-                        {` ${index + 1} ${player.name}`}
+                        {` ${index + 1} ${player.full_name}`}
                     </span>
                 </div>
             )}
