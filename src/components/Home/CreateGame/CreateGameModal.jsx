@@ -125,7 +125,7 @@ function CreateGameModal(props) {
                         error ?
                             <span onClick={handleError} className='boarding-error'><RiErrorWarningFill />Invalid Credentials</span>
                             :
-                            <Button type="submit" className='form-button'>
+                            <Button onClick={handleSubmit} className='form-button'>
                                 NEW GAME
                             </Button>
                 }

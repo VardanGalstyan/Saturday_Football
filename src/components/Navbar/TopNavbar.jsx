@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import EditProfileModal from './EditProfileModal'
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Container, Navbar, Nav } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import './style.css'
 
@@ -8,38 +9,9 @@ function TopNavbar() {
 
     const token = localStorage.getItem('footballAccessToken')
     const navigate = useNavigate()
+    const data = useSelector(state => state.user.data)
 
     const [showModal, setShowModal] = useState(false)
-    const [data, setData] = useState({})
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
-
-    useEffect(() => {
-        handlePlayerFetch()
-    }, [])
-
-
-    const handlePlayerFetch = async () => {
-        try {
-            setLoading(true)
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/me`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (response.ok) {
-                const data = await response.json()
-                setData(data)
-                setLoading(false)
-            } else {
-                setError(true)
-                setLoading(false)
-            }
-        } catch (error) {
-            console.log(error);
-            setError(true)
-        }
-    }
 
     const handleLogout = () => {
         localStorage.removeItem('footballAccessToken')
@@ -53,8 +25,7 @@ function TopNavbar() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
-                        {
-                            token &&
+                        {token &&
                             <>
                                 <Nav.Link href="#features">ACTIVE GAMES</Nav.Link>
                                 <Nav.Link href="#pricing">HISTORY</Nav.Link>
@@ -63,10 +34,10 @@ function TopNavbar() {
                     </Nav>
                     <Nav>
                         {token ?
-                            <NavDropdown title="Profile Settings">
-                                <NavDropdown.Item onClick={() => setShowModal(true)}>Edit Profile</NavDropdown.Item>
-                                <NavDropdown.Item onClick={handleLogout}>LOG OUT</NavDropdown.Item>
-                            </NavDropdown> :
+                            <>
+                                <Nav.Link onClick={() => setShowModal(true)}>Edit Profile</Nav.Link>
+                                <Nav.Link onClick={handleLogout}>LOG OUT</Nav.Link>
+                            </> :
                             <>
                                 <Nav.Link onClick={() => navigate('login')}>Sign in</Nav.Link>
                                 <Nav.Link onClick={() => navigate('register')}>Sign up</Nav.Link>

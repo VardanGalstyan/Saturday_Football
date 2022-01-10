@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
 // import { useTimer } from 'react-timer-hook';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import ActiveGameDeleteModal from './ActiveGameDeleteModal'
 import PlayersModal from './Players/PlayersModal'
 import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
-import { fillSessionData } from '../../Redux/Actions/actions';
+import MyTimer from './MyTimer'
+
 import Join from './StatusUpdate/Join'
 
 function ActiveGames(props) {
 
     const { game } = props
     const token = localStorage.getItem('footballAccessToken')
-    const dispatch = useDispatch()
-
 
     const join = useSelector(state => state.user.data)
+    const isHost = game.host._id === join._id
 
     // S T A T E S
     const [modalShow, setModalShow] = useState(false)
@@ -33,25 +33,6 @@ function ActiveGames(props) {
 
     // H A N D L E R S
 
-    const isHost = game.host._id === join._id
-
-
-    const handleDelete = async () => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/${game._id}/remove`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (response.ok) {
-                dispatch(fillSessionData())
-            }
-        } catch (error) {
-
-        }
-    }
-
 
     return (
         <Container className='active-game'>
@@ -66,6 +47,7 @@ function ActiveGames(props) {
             <div className='active-game-location'>
                 <span>{game.session_location}</span>
             </div>
+            {game.playing && <MyTimer />}
             <Join game={game} token={token} join={join} />
             <div className='active-game-created-by'>
                 <div className='active-game-players'>
@@ -99,7 +81,8 @@ function ActiveGames(props) {
             <ActiveGameDeleteModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-                handleDelete={() => handleDelete()}
+                game={game}
+                token={token}
             />
             <PlayersModal
                 show={showPlayersModal}
@@ -109,7 +92,8 @@ function ActiveGames(props) {
             <StatusUpdateModal
                 show={showStatusModal}
                 onHide={() => setShowStatusModal(false)}
-
+                game={game}
+                token={token}
             />
 
         </Container >

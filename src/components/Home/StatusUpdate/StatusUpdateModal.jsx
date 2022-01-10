@@ -9,12 +9,14 @@ import TeamItem from './TeamItem'
 
 function StatusUpdateModal(props) {
 
-
+    const game = props.game
+    const token = props.token
     const players = useSelector(state => state.players.data)
 
     // S T A T E S
     const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const handleGenerate = () => {
@@ -45,7 +47,7 @@ function StatusUpdateModal(props) {
     }
 
     const onDragEnd = result => {
-        const { destination, source, draggableId } = result
+        const { destination, source } = result
         if (!destination) {
             return
         }
@@ -96,6 +98,29 @@ function StatusUpdateModal(props) {
         }
 
 
+    }
+
+    const handlePlay = async () => {
+        try {
+            setIsLoading(true)
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/play/${game._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(teams)
+            })
+            if (response.ok) {
+                setIsLoading(false)
+                props.onHide()
+            } else {
+                setIsLoading(false)
+                throw new Error('Something went wrong')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -166,7 +191,7 @@ function StatusUpdateModal(props) {
             <Modal.Footer>
                 <Button
                     className='form-button'
-                    onClick={props.onHide}
+                    onClick={handlePlay}
                 >
                     Play</Button>
                 <Button

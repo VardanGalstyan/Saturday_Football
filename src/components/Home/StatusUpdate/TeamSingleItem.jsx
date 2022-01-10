@@ -13,7 +13,6 @@ function TeamSingleItem(props) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
-                // ref={provided.innerRef}
                 >
                     <span className='single-player' >
                         {` ${index + 1} ${player.full_name}`}
