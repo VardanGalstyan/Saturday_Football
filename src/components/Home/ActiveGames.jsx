@@ -47,7 +47,7 @@ function ActiveGames(props) {
             <div className='active-game-location'>
                 <span>{game.session_location}</span>
             </div>
-            {game.playing && <MyTimer />}
+            {game.playing && <MyTimer game={game} />}
             <Join game={game} token={token} join={join} />
             <div className='active-game-created-by'>
                 <div className='active-game-players'>

@@ -198,3 +198,19 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+.timer-items-holder {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 35px;
+}
+
+.timer-items-holder span {
+  background-color: white;
+  color: var(--blue);
+  width: 35px;
+  border-radius: 5px;
+  margin: 0 4px;
+}

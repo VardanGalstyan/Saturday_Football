@@ -2,36 +2,37 @@ import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { chunkArray, shuffle } from '../../../utilities/status-utils.js'
 import { DragDropContext } from 'react-beautiful-dnd'
-// import { players } from '../../../initial-data.js'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import TopMemberList from './TopMemberList'
 import TeamItem from './TeamItem'
+import { fillSessionData } from '../../../Redux/Actions/actions.js'
 
 function StatusUpdateModal(props) {
 
     const game = props.game
     const token = props.token
-    const players = useSelector(state => state.players.data)
+    const dispatch = useDispatch()
 
     // S T A T E S
     const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
+    
     const [isLoading, setIsLoading] = useState(false)
 
 
     const handleGenerate = () => {
         if (teams.length > 1 && teamValue !== teams.length) {
             setTeams([])
-            setTeams(chunkArray(players, teamValue))
+            setTeams(chunkArray(game.players, teamValue))
         } else {
-            setTeams(chunkArray(players, teamValue))
+            setTeams(chunkArray(game.players, teamValue))
         }
     }
 
     const handleShuffle = () => {
         if (teams.length >= 2) {
-            shuffle(players)
-            setTeams(chunkArray(players, teamValue))
+            shuffle(game.players)
+            setTeams(chunkArray(game.players, teamValue))
         }
     }
 
@@ -114,6 +115,7 @@ function StatusUpdateModal(props) {
             if (response.ok) {
                 setIsLoading(false)
                 props.onHide()
+                dispatch(fillSessionData())
             } else {
                 setIsLoading(false)
                 throw new Error('Something went wrong')
@@ -135,7 +137,7 @@ function StatusUpdateModal(props) {
         >
             <Modal.Body>
                 <div className='player-status-container'>
-                    {players.map((player) => <TopMemberList player={player} key={player._id} />)}
+                    {game.players.map((player) => <TopMemberList player={player} key={player._id} />)}
                 </div>
                 <DragDropContext
                     onDragEnd={onDragEnd}
