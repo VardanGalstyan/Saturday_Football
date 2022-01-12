@@ -16,7 +16,7 @@ function StatusUpdateModal(props) {
     // S T A T E S
     const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
-    
+
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -101,6 +101,30 @@ function StatusUpdateModal(props) {
 
     }
 
+    const handleConfirmation = async () => {
+        try {
+            setIsLoading(true)
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/confirm/${game._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(teams)
+            })
+            if (response.ok) {
+                setIsLoading(false)
+                props.onHide()
+                dispatch(fillSessionData())
+            } else {
+                setIsLoading(false)
+                throw new Error('Something went wrong')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handlePlay = async () => {
         try {
             setIsLoading(true)
@@ -125,8 +149,6 @@ function StatusUpdateModal(props) {
         }
     }
 
-
-
     return (
         <Modal
             {...props}
@@ -137,11 +159,11 @@ function StatusUpdateModal(props) {
         >
             <Modal.Body>
                 <div className='player-status-container'>
-                    {game.players.map((player) => <TopMemberList player={player} key={player._id} />)}
+                    {
+                        game.players.map((player) => <TopMemberList player={player} key={player._id} />)
+                    }
                 </div>
-                <DragDropContext
-                    onDragEnd={onDragEnd}
-                >
+                <DragDropContext onDragEnd={onDragEnd}>
                     <div className={`teams-divided`}>
                         {
                             teams.map((team, index) => (
@@ -177,10 +199,15 @@ function StatusUpdateModal(props) {
                         <div className='random-select-button mr-1'>
                             <span onClick={handleGenerate}>Generate Teams</span>
                         </div>
-                        <div className='random-select-button'>
+                        <div className='random-select-button mr-1'>
                             <span
                                 onClick={handleShuffle}
                             >Shuffle</span>
+                        </div>
+                        <div className='random-select-button'>
+                            <span
+                                onClick={handleConfirmation}
+                            >Confirm Teams</span>
                         </div>
                     </div>
                     <div>

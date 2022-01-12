@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import TopNavbar from './components/Navbar/TopNavbar';
 import Login from './components/onboarding/Login';
 import Register from './components/onboarding/Register';
-import { fillPlayersDataAction, fillSessionData, fillUserData } from './Redux/Actions/actions';
+import { fillLocationsData, fillPlayersDataAction, fillSessionData, fillUserData } from './Redux/Actions/actions';
 
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
     dispatch(fillSessionData())
     dispatch(fillUserData(token))
     dispatch(fillPlayersDataAction())
+    dispatch(fillLocationsData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 

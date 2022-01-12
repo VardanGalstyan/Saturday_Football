@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import allPlayersReducer from './Reducers.js/playersReducers';
 import sessionsReducer from './Reducers.js/sessionsReducer';
 import userReducer from './Reducers.js/userReducer';
+import locationsReducer from './Reducers.js/locationsReducer';
 
 export const initialState = {
 
@@ -23,12 +24,19 @@ export const initialState = {
         loading: false,
         error: null
     },
+
+    locations: {
+        data: [],
+        loading: false,
+        error: null
+    },
 }
 
 const combinedReducers = combineReducers({
     players: allPlayersReducer,
     sessions: sessionsReducer,
     user: userReducer,
+    locations: locationsReducer,
 
 
 })

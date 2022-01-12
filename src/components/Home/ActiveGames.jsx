@@ -8,6 +8,8 @@ import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
 import MyTimer from './MyTimer'
 
 import Join from './StatusUpdate/Join'
+import TeamsModal from './StatusUpdate/Modals/TeamsModal'
+import CreateGameModal from './CreateGame/CreateGameModal'
 
 function ActiveGames(props) {
 
@@ -21,6 +23,8 @@ function ActiveGames(props) {
     const [modalShow, setModalShow] = useState(false)
     const [showPlayersModal, setShowPlayersModal] = useState(false)
     const [showStatusModal, setShowStatusModal] = useState(false)
+    const [showTeamsModal, setShowTeamsModal] = useState(false)
+    const [showEditGame, setShowEditGame] = useState(false)
 
 
     // D A T E  M E T H O D S
@@ -62,17 +66,28 @@ function ActiveGames(props) {
                         <span>Room | </span>
                         <span>{game.session_room}</span>
                     </div>
-                    <div
-                        className='active-game-badges-status'
-                        onClick={() => setShowStatusModal(true)}
-                    >
-                        <span>View</span>
-                        <span>Status</span>
-                    </div>
+                    {isHost &&
+                        <div
+                            className='active-game-badges-status'
+                            onClick={() => setShowStatusModal(true)}
+                        >
+                            <span>assign</span>
+                            <span>Teams</span>
+                        </div>
+                    }
+                    {
+                        game.teams.length > 0 &&
+                        <div
+                            className='active-game-badges-status'
+                            onClick={() => setShowTeamsModal(true)}
+                        >
+                            <span>Teams</span>
+                        </div>
+                    }
                 </div>
                 {isHost &&
                     <div className='active-game-buttons mt-2'>
-                        <span>Edit</span>
+                        <span onClick={() => setShowEditGame(true)}>Edit</span>
                         <span onClick={() => setModalShow(true)}>Delete</span>
                     </div>
                 }
@@ -92,6 +107,18 @@ function ActiveGames(props) {
             <StatusUpdateModal
                 show={showStatusModal}
                 onHide={() => setShowStatusModal(false)}
+                game={game}
+                token={token}
+            />
+            <TeamsModal
+                show={showTeamsModal}
+                onHide={() => setShowTeamsModal(false)}
+                game={game}
+            />
+
+            <CreateGameModal
+                show={showEditGame}
+                onHide={() => setShowEditGame(false)}
                 game={game}
                 token={token}
             />
