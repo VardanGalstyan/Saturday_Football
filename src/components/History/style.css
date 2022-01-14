@@ -1,0 +1,17 @@
+.history {
+  width: 90%;
+  margin-top: 20px;
+}
+
+.history .active-game {
+  font-family: var(--form-font);
+  background-color: rgb(100, 99, 99);
+  color: white;
+  border: 1px solid white;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}

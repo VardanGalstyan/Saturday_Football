@@ -152,7 +152,7 @@
 }
 
 .active-game-players .active-game-badges span:last-child {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 .active-game-players .active-game-badges-players span:last-child {
@@ -160,7 +160,7 @@
 }
 
 .active-game-players .active-game-badges-status span:last-child {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .modal .modal-body {
@@ -197,4 +197,20 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 20px;
+}
+
+.timer-items-holder {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 35px;
+}
+
+.timer-items-holder span {
+  background-color: white;
+  color: var(--blue);
+  width: 35px;
+  border-radius: 5px;
+  margin: 0 4px;
 }

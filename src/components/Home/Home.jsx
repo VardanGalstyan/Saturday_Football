@@ -3,19 +3,22 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import ActiveGames from './ActiveGames'
 import NewGame from './CreateGame/NewGame'
-// import MainPitch from '../Pitch/MainPitch'
 
 function Home() {
 
     const activeGames = useSelector(state => state.sessions.data)
+    const gamesInHistory = useSelector(state => state.history.data)
+
 
 
 
     return (
         <div className='home'>
-            {activeGames && activeGames.map(game => <ActiveGames key={game._id} game={game} />)}
+            {
+                activeGames.filter(session => gamesInHistory.some(item => item.session._id !== session._id))
+                    .map(newGame => <ActiveGames key={newGame._id} game={newGame} />)
+            }
             <NewGame />
-            {/* <MainPitch /> */}
         </div>
     )
 }

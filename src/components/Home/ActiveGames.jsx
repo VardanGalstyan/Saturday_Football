@@ -1,26 +1,29 @@
 import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
-// import { useTimer } from 'react-timer-hook';
-import { useDispatch, useSelector } from 'react-redux'
-import ActiveGameDeleteModal from './ActiveGameDeleteModal'
+import { useSelector } from 'react-redux'
+import ActiveGameDeleteModal from './StatusUpdate/Modals/ActiveGameDeleteModal'
 import PlayersModal from './Players/PlayersModal'
-import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
-import { fillSessionData } from '../../Redux/Actions/actions';
+import StatusUpdateModal from './StatusUpdate/Modals/StatusUpdateModal'
+import MyTimer from './MyTimer'
+
 import Join from './StatusUpdate/Join'
+import TeamsModal from './StatusUpdate/Modals/TeamsModal'
+import CreateGameModal from './CreateGame/CreateGameModal'
 
 function ActiveGames(props) {
 
     const { game } = props
     const token = localStorage.getItem('footballAccessToken')
-    const dispatch = useDispatch()
-
 
     const join = useSelector(state => state.user.data)
+    const isHost = game.host._id === join._id
 
     // S T A T E S
     const [modalShow, setModalShow] = useState(false)
     const [showPlayersModal, setShowPlayersModal] = useState(false)
     const [showStatusModal, setShowStatusModal] = useState(false)
+    const [showTeamsModal, setShowTeamsModal] = useState(false)
+    const [showEditGame, setShowEditGame] = useState(false)
 
 
     // D A T E  M E T H O D S
@@ -31,26 +34,6 @@ function ActiveGames(props) {
     let dayName = days[day.getDay()];
 
 
-    // H A N D L E R S
-
-    const isHost = game.host._id === join._id
-
-
-    const handleDelete = async () => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/${game._id}/remove`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (response.ok) {
-                dispatch(fillSessionData())
-            }
-        } catch (error) {
-
-        }
-    }
 
 
     return (
@@ -66,6 +49,7 @@ function ActiveGames(props) {
             <div className='active-game-location'>
                 <span>{game.session_location}</span>
             </div>
+            {game.playing && <MyTimer game={game} />}
             <Join game={game} token={token} join={join} />
             <div className='active-game-created-by'>
                 <div className='active-game-players'>
@@ -80,17 +64,28 @@ function ActiveGames(props) {
                         <span>Room | </span>
                         <span>{game.session_room}</span>
                     </div>
-                    <div
-                        className='active-game-badges-status'
-                        onClick={() => setShowStatusModal(true)}
-                    >
-                        <span>View</span>
-                        <span>Status</span>
-                    </div>
+                    {isHost &&
+                        <div
+                            className='active-game-badges-status'
+                            onClick={() => setShowStatusModal(true)}
+                        >
+                            {/* <span>Settings</span> */}
+                            <span>Settings</span>
+                        </div>
+                    }
+                    {
+                        game.teams.length > 0 &&
+                        <div
+                            className='active-game-badges-status'
+                            onClick={() => setShowTeamsModal(true)}
+                        >
+                            <span>Teams</span>
+                        </div>
+                    }
                 </div>
                 {isHost &&
                     <div className='active-game-buttons mt-2'>
-                        <span>Edit</span>
+                        <span onClick={() => setShowEditGame(true)}>Edit</span>
                         <span onClick={() => setModalShow(true)}>Delete</span>
                     </div>
                 }
@@ -99,7 +94,8 @@ function ActiveGames(props) {
             <ActiveGameDeleteModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-                handleDelete={() => handleDelete()}
+                game={game}
+                token={token}
             />
             <PlayersModal
                 show={showPlayersModal}
@@ -109,7 +105,19 @@ function ActiveGames(props) {
             <StatusUpdateModal
                 show={showStatusModal}
                 onHide={() => setShowStatusModal(false)}
-
+                game={game}
+                token={token}
+            />
+            <TeamsModal
+                show={showTeamsModal}
+                onHide={() => setShowTeamsModal(false)}
+                game={game}
+            />
+            <CreateGameModal
+                show={showEditGame}
+                onHide={() => setShowEditGame(false)}
+                game={game}
+                token={token}
             />
 
         </Container >

@@ -8,6 +8,12 @@ import {
     FILL_USER_DATA_ERROR,
     FILL_USER_DATA_LOADING,
     FILL_USER_DATA,
+    FILL_LOCATIONS_DATA_ERROR,
+    FILL_LOCATIONS_DATA_LOADING,
+    FILL_LOCATIONS_DATA,
+    FILL_HISTORY_DATA_ERROR,
+    FILL_HISTORY_DATA_LOADING,
+    FILL_HISTORY_DATA,
 } from "./actionTypes";
 
 export const fillPlayersDataAction = () => {
@@ -130,6 +136,90 @@ export const fillUserData = (token) => {
             })
             dispatch({
                 type: FILL_USER_DATA_ERROR,
+                payload: true
+            })
+        }
+
+    }
+}
+
+export const fillLocationsData = (token) => {
+
+
+    return async (dispatch, getState) => {
+
+        try {
+            let response = await fetch(`${process.env.REACT_APP_URL}/players/locations`, {
+            })
+            if (response.ok) {
+                let data = await response.json()
+                dispatch({
+                    type: FILL_LOCATIONS_DATA_LOADING,
+                    payload: false
+                })
+                dispatch({
+                    type: FILL_LOCATIONS_DATA,
+                    payload: data
+                })
+            } else {
+                dispatch({
+                    type: FILL_LOCATIONS_DATA_LOADING,
+                    payload: false
+                })
+                dispatch({
+                    type: FILL_LOCATIONS_DATA_ERROR,
+                    payload: true
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: FILL_LOCATIONS_DATA_LOADING,
+                payload: false
+            })
+            dispatch({
+                type: FILL_LOCATIONS_DATA_ERROR,
+                payload: true
+            })
+        }
+
+    }
+}
+
+export const fillHistoryData = (token) => {
+
+
+    return async (dispatch, getState) => {
+
+        try {
+            let response = await fetch(`${process.env.REACT_APP_URL}/history`, {
+            })
+            if (response.ok) {
+                let data = await response.json()
+                dispatch({
+                    type: FILL_HISTORY_DATA_LOADING,
+                    payload: false
+                })
+                dispatch({
+                    type: FILL_HISTORY_DATA,
+                    payload: data
+                })
+            } else {
+                dispatch({
+                    type: FILL_HISTORY_DATA_LOADING,
+                    payload: false
+                })
+                dispatch({
+                    type: FILL_HISTORY_DATA_ERROR,
+                    payload: true
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: FILL_HISTORY_DATA_LOADING,
+                payload: false
+            })
+            dispatch({
+                type: FILL_HISTORY_DATA_ERROR,
                 payload: true
             })
         }

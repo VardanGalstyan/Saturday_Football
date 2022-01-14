@@ -15,7 +15,7 @@ function Join({ game, token, join }) {
     const handleJoin = async () => {
         try {
             setIsLoading(true)
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/join/${game._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/join/${game._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,35 +1,41 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
-import { chunkArray, shuffle } from '../../../utilities/status-utils.js'
+import { chunkArray, shuffle } from '../../../../utilities/status-utils.js'
 import { DragDropContext } from 'react-beautiful-dnd'
-// import { players } from '../../../initial-data.js'
-import { useSelector } from 'react-redux'
-import TopMemberList from './TopMemberList'
-import TeamItem from './TeamItem'
+import { useDispatch } from 'react-redux'
+import TopMemberList from '../TopMemberList'
+import TeamItem from '../TeamItem'
+import { fillSessionData } from '../../../../Redux/Actions/actions.js'
+import DropGameModal from './DropGameModal.jsx'
+import EndGameModal from './EndGameModal.jsx'
 
 function StatusUpdateModal(props) {
 
-
-    const players = useSelector(state => state.players.data)
+    const game = props.game
+    const token = props.token
+    const dispatch = useDispatch()
 
     // S T A T E S
     const [teamValue, setTeamValue] = useState(0) // useMemo or useCallback
     const [teams, setTeams] = useState([])
+    const [modalShow, setModalShow] = useState(false)
+    const [endGameModalShow, setEndGameModalShow] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const handleGenerate = () => {
         if (teams.length > 1 && teamValue !== teams.length) {
             setTeams([])
-            setTeams(chunkArray(players, teamValue))
+            setTeams(chunkArray(game.players, teamValue))
         } else {
-            setTeams(chunkArray(players, teamValue))
+            setTeams(chunkArray(game.players, teamValue))
         }
     }
 
     const handleShuffle = () => {
         if (teams.length >= 2) {
-            shuffle(players)
-            setTeams(chunkArray(players, teamValue))
+            shuffle(game.players)
+            setTeams(chunkArray(game.players, teamValue))
         }
     }
 
@@ -45,7 +51,7 @@ function StatusUpdateModal(props) {
     }
 
     const onDragEnd = result => {
-        const { destination, source, draggableId } = result
+        const { destination, source } = result
         if (!destination) {
             return
         }
@@ -98,7 +104,56 @@ function StatusUpdateModal(props) {
 
     }
 
+    const handleConfirmation = async () => {
+        try {
+            setIsLoading(true)
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/confirm/${game._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(teams)
+            })
+            if (response.ok) {
+                setIsLoading(false)
+                dispatch(fillSessionData())
+            } else {
+                setIsLoading(false)
+                throw new Error('Something went wrong')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
+    const handlePlay = async () => {
+        try {
+            if (game.playing) {
+                setModalShow(true)
+            } else {
+                setIsLoading(true)
+                const response = await fetch(`${process.env.REACT_APP_URL}/players/play/${game._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(teams)
+                })
+                if (response.ok) {
+                    setIsLoading(false)
+                    props.onHide()
+                    dispatch(fillSessionData())
+                } else {
+                    setIsLoading(false)
+                    throw new Error('Something went wrong')
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Modal
@@ -110,11 +165,11 @@ function StatusUpdateModal(props) {
         >
             <Modal.Body>
                 <div className='player-status-container'>
-                    {players.map((player) => <TopMemberList player={player} key={player._id} />)}
+                    {
+                        game.players.map((player) => <TopMemberList player={player} key={player._id} />)
+                    }
                 </div>
-                <DragDropContext
-                    onDragEnd={onDragEnd}
-                >
+                <DragDropContext onDragEnd={onDragEnd}>
                     <div className={`teams-divided`}>
                         {
                             teams.map((team, index) => (
@@ -150,10 +205,15 @@ function StatusUpdateModal(props) {
                         <div className='random-select-button mr-1'>
                             <span onClick={handleGenerate}>Generate Teams</span>
                         </div>
-                        <div className='random-select-button'>
+                        <div className='random-select-button mr-1'>
                             <span
                                 onClick={handleShuffle}
                             >Shuffle</span>
+                        </div>
+                        <div className='random-select-button'>
+                            <span
+                                onClick={handleConfirmation}
+                            >{game.teams.length === 0 ? "Confirm Teams" : "Drop Teams"}</span>
                         </div>
                     </div>
                     <div>
@@ -164,11 +224,22 @@ function StatusUpdateModal(props) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    className='form-button'
-                    onClick={props.onHide}
-                >
-                    Play</Button>
+                <div>
+                    <Button
+                        className='form-button'
+                        onClick={handlePlay}
+                    >
+                        {game.playing ? "Drop" : "Play"}
+                    </Button>
+                    {
+                        game.playing &&
+                        <Button
+                            onClick={() => setEndGameModalShow(true)}
+                            className='form-button'>
+                            End game
+                        </Button>
+                    }
+                </div>
                 <Button
                     className='form-button'
                     onClick={handleClose}
@@ -176,6 +247,19 @@ function StatusUpdateModal(props) {
                     Close
                 </Button>
             </Modal.Footer>
+            <DropGameModal
+                onHide={() => setModalShow(false)}
+                show={modalShow}
+                game={game}
+                token={token}
+                handleClose={handleClose}
+            />
+            <EndGameModal
+                onHide={() => setEndGameModalShow(false)}
+                show={endGameModalShow}
+                game={game}
+                token={token}
+            />
         </Modal >
     )
 }
