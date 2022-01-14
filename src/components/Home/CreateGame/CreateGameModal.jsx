@@ -37,7 +37,7 @@ function CreateGameModal(props) {
         e.preventDefault()
         try {
             setLoading(true)
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/session/${game && game._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/me/session/${game ? game._id : ""}`, {
                 method,
                 headers: {
                     'Content-Type': 'application/json',

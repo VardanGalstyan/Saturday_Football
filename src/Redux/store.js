@@ -4,6 +4,7 @@ import allPlayersReducer from './Reducers.js/playersReducers';
 import sessionsReducer from './Reducers.js/sessionsReducer';
 import userReducer from './Reducers.js/userReducer';
 import locationsReducer from './Reducers.js/locationsReducer';
+import historyReducer from './Reducers.js/historyReducer';
 
 export const initialState = {
 
@@ -30,6 +31,12 @@ export const initialState = {
         loading: false,
         error: null
     },
+
+    history: {
+        data: [],
+        loading: false,
+        error: null
+    },
 }
 
 const combinedReducers = combineReducers({
@@ -37,6 +44,7 @@ const combinedReducers = combineReducers({
     sessions: sessionsReducer,
     user: userReducer,
     locations: locationsReducer,
+    history: historyReducer
 
 
 })

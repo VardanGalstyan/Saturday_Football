@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { fillSessionData } from '../../Redux/Actions/actions';
+import { fillSessionData } from '../../../../Redux/Actions/actions';
 import { useDispatch } from 'react-redux';
 
 function ActiveGameDeleteModal(props) {

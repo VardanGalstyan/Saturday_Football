@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import TopNavbar from './components/Navbar/TopNavbar';
 import Login from './components/onboarding/Login';
 import Register from './components/onboarding/Register';
-import { fillLocationsData, fillPlayersDataAction, fillSessionData, fillUserData } from './Redux/Actions/actions';
+import History from './components/History/History';
+import { fillHistoryData, fillLocationsData, fillPlayersDataAction, fillSessionData, fillUserData } from './Redux/Actions/actions';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     dispatch(fillUserData(token))
     dispatch(fillPlayersDataAction())
     dispatch(fillLocationsData())
+    dispatch(fillHistoryData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
@@ -31,6 +33,7 @@ function App() {
         <Route path="register" element={<Register />} /> :
         <Route path="login" element={<Login />} /> :
         <Route path="home" element={<Home />} />
+        <Route path="history" element={<History />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
-// import { useTimer } from 'react-timer-hook';
 import { useSelector } from 'react-redux'
-import ActiveGameDeleteModal from './ActiveGameDeleteModal'
+import ActiveGameDeleteModal from './StatusUpdate/Modals/ActiveGameDeleteModal'
 import PlayersModal from './Players/PlayersModal'
-import StatusUpdateModal from './StatusUpdate/StatusUpdateModal'
+import StatusUpdateModal from './StatusUpdate/Modals/StatusUpdateModal'
 import MyTimer from './MyTimer'
 
 import Join from './StatusUpdate/Join'
@@ -35,7 +34,6 @@ function ActiveGames(props) {
     let dayName = days[day.getDay()];
 
 
-    // H A N D L E R S
 
 
     return (
@@ -71,8 +69,8 @@ function ActiveGames(props) {
                             className='active-game-badges-status'
                             onClick={() => setShowStatusModal(true)}
                         >
-                            <span>assign</span>
-                            <span>Teams</span>
+                            {/* <span>Settings</span> */}
+                            <span>Settings</span>
                         </div>
                     }
                     {
@@ -115,7 +113,6 @@ function ActiveGames(props) {
                 onHide={() => setShowTeamsModal(false)}
                 game={game}
             />
-
             <CreateGameModal
                 show={showEditGame}
                 onHide={() => setShowEditGame(false)}

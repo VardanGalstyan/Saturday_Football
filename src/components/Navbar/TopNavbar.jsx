@@ -27,8 +27,8 @@ function TopNavbar() {
                     <Nav className="mr-auto">
                         {token &&
                             <>
-                                <Nav.Link href="#features">ACTIVE GAMES</Nav.Link>
-                                <Nav.Link href="#pricing">HISTORY</Nav.Link>
+                                <Nav.Link onClick={() => navigate('home')}>ACTIVE GAMES</Nav.Link>
+                                <Nav.Link onClick={() => navigate('history')}>HISTORY</Nav.Link>
                             </>
                         }
                     </Nav>
