@@ -6,7 +6,7 @@
   font-family: "Bebas Neue", cursive;
   width: 40% !important;
   border-radius: 5px;
-  margin-top: 30%;
+  height: 100%;
 }
 
 .sign-in-form .form-group-item {
@@ -41,7 +41,6 @@
 @media screen and (max-width: 768px) {
   .sign-in-form {
     width: 80% !important;
-    margin-top: 50%;
   }
 }
 
