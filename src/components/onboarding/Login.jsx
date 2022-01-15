@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ClockLoader } from "react-spinners";
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import { RiErrorWarningFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { fillUserData, fillSessionData } from '../../Redux/Actions/actions';
@@ -60,7 +60,7 @@ function Login() {
     return (
         <div className='sign-in-form'>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className='form-group-item'>
+                <Form.Group as={Col} className='form-group-item'>
                     <Form.Control
                         type="email"
                         placeholder="Enter email"
@@ -69,7 +69,7 @@ function Login() {
                         onChange={(e) => setPlayer({ ...player, email: e.target.value })}
                     />
                 </Form.Group>
-                <Form.Group className='form-group-item'>
+                <Form.Group as={Col} className='form-group-item'>
                     <Form.Control
                         type="password"
                         placeholder="Password"
@@ -88,10 +88,7 @@ function Login() {
                                     Invalid Credentials
                                 </span>
                                 :
-                                <Button
-                                    type="submit"
-                                    className='form-button'
-                                >
+                                <Button type="submit" className='form-button' >
                                     SIGN IN
                                 </Button>
                     }
