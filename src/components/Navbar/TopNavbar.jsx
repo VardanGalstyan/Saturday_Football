@@ -21,7 +21,7 @@ function TopNavbar() {
     return (
         <Container className='navbar-container' fluid>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand onClick={() => navigate("/home")}>Game</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate("/home")}>{token ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
