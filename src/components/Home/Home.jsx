@@ -10,13 +10,13 @@ function Home() {
     const gamesInHistory = useSelector(state => state.history.data)
 
 
-
-
     return (
         <div className='home'>
             {
-                activeGames.filter(session => gamesInHistory.some(item => item.session._id !== session._id))
-                    .map(newGame => <ActiveGames key={newGame._id} game={newGame} />)
+                gamesInHistory.length > 0 ?
+                    activeGames.filter(session => gamesInHistory.some(item => item.session._id !== session._id))
+                        .map(newGame => <ActiveGames key={newGame._id} game={newGame} />) :
+                    activeGames.map(newGame => <ActiveGames key={newGame._id} game={newGame} />)
             }
             <NewGame />
         </div>
