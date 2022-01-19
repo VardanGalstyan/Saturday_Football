@@ -11,7 +11,7 @@
 
 .menu-option {
   color: white;
-  font-family: "Bebas Neue", cursive;
+  font-family: var(--form-font);
   font-size: 20px;
   width: 100%;
 }

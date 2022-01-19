@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { ClockLoader } from "react-spinners";
 import { Modal, Form, Col, Button } from 'react-bootstrap'
 import { RiErrorWarningFill } from 'react-icons/ri'
+import { useDispatch } from 'react-redux';
+import { fillSessionData, fillUserData } from '../../Redux/Actions/actions'
+
+
 
 function EditProfileModal(props) {
 
     const data = props.data
     const token = localStorage.getItem('footballAccessToken');
+    const dispatch = useDispatch()
 
     const initialState = {
         full_name: data ? data.full_name : '',
@@ -37,6 +42,8 @@ function EditProfileModal(props) {
             if (response.ok) {
                 setIsLoading(false)
                 props.onHide()
+                dispatch(fillUserData(token))
+                dispatch(fillSessionData())
             } else {
                 setError(true)
                 setIsLoading(false)
@@ -104,6 +111,7 @@ function EditProfileModal(props) {
                             <Button
                                 type="submit"
                                 className='form-button'
+                                onClick={handleSubmit}
                             >
                                 Edit
                             </Button>

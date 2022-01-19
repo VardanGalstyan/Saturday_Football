@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fillSessionData())
-    dispatch(fillUserData(token))
+    token && dispatch(fillUserData(token))
     dispatch(fillPlayersDataAction())
     dispatch(fillLocationsData())
     dispatch(fillHistoryData())

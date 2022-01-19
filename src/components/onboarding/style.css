@@ -3,7 +3,7 @@
   border: white 2px solid;
   padding: 25px;
   color: white;
-  font-family: "Bebas Neue", cursive;
+  font-family: var(--text-font);
   width: 40% !important;
   border-radius: 5px;
   height: 100%;
@@ -26,6 +26,7 @@
   border: none !important;
   font-size: 20px !important;
   cursor: pointer;
+  font-family: var(--form-font) !important;
 }
 
 .form-button:hover {
