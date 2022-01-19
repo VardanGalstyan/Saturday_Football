@@ -22,7 +22,8 @@ function App() {
     dispatch(fillLocationsData())
     dispatch(fillHistoryData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+    console.log('checking token', token);
+  }, [])
 
 
   return (
