@@ -7,7 +7,7 @@ import { RiErrorWarningFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux';
 import { fillSessionData, fillUserData } from '../../Redux/Actions/actions';
 
-function Login() {
+function Register() {
 
     const initialState = {
         full_name: '',
@@ -40,7 +40,7 @@ function Login() {
                 setLoading(false)
                 dispatch(fillSessionData())
                 dispatch(fillUserData(data.accessToken))
-                navigate('/')
+                navigate('/home')
             } else {
                 setError(true)
                 setLoading(false)
@@ -72,6 +72,7 @@ function Login() {
                     <Form.Control
                         type="email"
                         placeholder="Enter email"
+                        autoComplete='email'
                         value={player.email}
                         onChange={(e) => setPlayer({ ...player, email: e.target.value })}
                     />
@@ -79,6 +80,7 @@ function Login() {
                 <Form.Group className='form-group-item'>
                     <Form.Control
                         type="password"
+                        autoComplete='new-password'
                         placeholder="Password"
                         value={player.password}
                         onChange={(e) => setPlayer({ ...player, password: e.target.value })}
@@ -89,12 +91,19 @@ function Login() {
                         loading ?
                             <ClockLoader color={"#fff"} size={25} /> :
                             error ?
-                                <span onClick={handleError} className='boarding-error'>
+                                <span
+                                    onClick={handleError}
+                                    className='boarding-error'
+                                >
                                     <RiErrorWarningFill />
                                     Invalid Credentials
                                 </span>
                                 :
-                                <Button type="submit" className='form-button'>
+                                <Button
+                                    onClick={handleSubmit}
+                                    type="submit"
+                                    className='form-button'
+                                >
                                     Sign up
                                 </Button>
                     }
@@ -104,4 +113,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Register

@@ -39,7 +39,7 @@ function Login() {
                 setLoading(false)
                 dispatch(fillSessionData())
                 dispatch(fillUserData(data.accessToken))
-                navigate('/')
+                navigate('/home')
             } else {
                 setError(true)
                 setLoading(false)

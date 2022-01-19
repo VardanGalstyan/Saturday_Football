@@ -23,7 +23,7 @@ function TopNavbar() {
         const text = e.target.innerText
         setIsExpended(!isExpended)
         if (text === 'ACTIVE GAMES') {
-            navigate('/')
+            navigate('/home')
         } else if (text === 'HISTORY') {
             navigate('/history')
         } else if (text === 'Edit Profile') {
