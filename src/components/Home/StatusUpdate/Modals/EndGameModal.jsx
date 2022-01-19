@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Modal } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { fillSessionData } from '../../../../Redux/Actions/actions'
+import { fillHistoryData, fillSessionData } from '../../../../Redux/Actions/actions'
+import { FunctionContext } from '../CreateContext.js'
 
 function DropGameModal(props) {
 
     const game = props.game
     const token = props.token
     const dispatch = useDispatch()
+    const handleClose = useContext(FunctionContext)
 
 
     const handleEndGame = async () => {
@@ -22,7 +24,9 @@ function DropGameModal(props) {
             })
             if (response.ok) {
                 dispatch(fillSessionData())
+                dispatch(fillHistoryData())
                 props.onHide()
+                handleClose()
             } else {
                 throw new Error('Something went wrong')
             }

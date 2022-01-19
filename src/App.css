@@ -1,8 +1,13 @@
 :root {
-  --form-font: "Bebas Neue", cursive;
+  --form-font: "Bebas Neue";
   --text-font: "Montserrat", sans-serif;
   --blue: #25489c !important;
   --orange: #9c4923 !important;
+}
+
+body,
+html {
+  font-family: var(--form-font) !important;
 }
 
 .football-app {
@@ -18,4 +23,5 @@
   background-color: #9c4923;
   border: green 2px solid;
   position: relative;
+  font-family: var(--form-font) !important;
 }

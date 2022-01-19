@@ -4,6 +4,8 @@ import { Container, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { ClockLoader } from "react-spinners";
 import { RiErrorWarningFill } from 'react-icons/ri'
+import { useDispatch } from 'react-redux';
+import { fillSessionData, fillUserData } from '../../Redux/Actions/actions';
 
 function Login() {
 
@@ -14,6 +16,7 @@ function Login() {
     }
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -35,6 +38,8 @@ function Login() {
                 setPlayer(data.savedPlayer);
                 localStorage.setItem('footballAccessToken', data.accessToken);
                 setLoading(false)
+                dispatch(fillSessionData())
+                dispatch(fillUserData(data.accessToken))
                 navigate('/home')
             } else {
                 setError(true)

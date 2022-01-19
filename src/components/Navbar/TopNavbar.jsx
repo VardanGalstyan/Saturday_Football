@@ -23,7 +23,7 @@ function TopNavbar() {
         const text = e.target.innerText
         setIsExpended(!isExpended)
         if (text === 'ACTIVE GAMES') {
-            navigate('/home')
+            navigate('/')
         } else if (text === 'HISTORY') {
             navigate('/history')
         } else if (text === 'Edit Profile') {
@@ -50,7 +50,7 @@ function TopNavbar() {
                 fixed='top'
                 onToggle={() => setIsExpended(!isExpended)}
             >
-                <Navbar.Brand onClick={() => navigate("/home")}>{token && data.full_name ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate(token ? 'home' : 'login')}>{token && data.full_name ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
