@@ -8,6 +8,8 @@ import TeamItem from '../TeamItem'
 import { fillSessionData } from '../../../../Redux/Actions/actions.js'
 import DropGameModal from './DropGameModal.jsx'
 import EndGameModal from './EndGameModal.jsx'
+import { FunctionContext } from '../CreateContext.js'
+
 
 function StatusUpdateModal(props) {
 
@@ -247,19 +249,20 @@ function StatusUpdateModal(props) {
                     Close
                 </Button>
             </Modal.Footer>
-            <DropGameModal
-                onHide={() => setModalShow(false)}
-                show={modalShow}
-                game={game}
-                token={token}
-                handleClose={handleClose}
-            />
-            <EndGameModal
-                onHide={() => setEndGameModalShow(false)}
-                show={endGameModalShow}
-                game={game}
-                token={token}
-            />
+            <FunctionContext.Provider value={handleClose}>
+                <DropGameModal
+                    onHide={() => setModalShow(false)}
+                    show={modalShow}
+                    game={game}
+                    token={token}
+                />
+                <EndGameModal
+                    onHide={() => setEndGameModalShow(false)}
+                    show={endGameModalShow}
+                    game={game}
+                    token={token}
+                />
+            </FunctionContext.Provider>
         </Modal >
     )
 }
