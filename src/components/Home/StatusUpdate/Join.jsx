@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fillSessionData } from '../../../Redux/Actions/actions'
 import { ClockLoader } from "react-spinners";
 
@@ -8,6 +8,7 @@ import { ClockLoader } from "react-spinners";
 function Join({ game, token, join }) {
 
     const isJoined = game.players.some(player => player._id === join._id)
+    const user_id = useSelector(state => state.user && state.user.data._id)
     const dispatch = useDispatch()
 
     const [isLoading, setIsLoading] = useState(false)
@@ -15,7 +16,7 @@ function Join({ game, token, join }) {
     const handleJoin = async () => {
         try {
             setIsLoading(true)
-            const response = await fetch(`${process.env.REACT_APP_URL}/players/join/${game._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_URL}/players/join/${game._id}/${user_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

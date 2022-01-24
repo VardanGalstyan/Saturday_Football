@@ -15,7 +15,7 @@ function TeamSingleItem(props) {
                     ref={provided.innerRef}
                 >
                     <span className='single-player' >
-                        {` ${index + 1} ${player.full_name}`}
+                        {`${index === 0 ? `GK` : index} ${player.full_name}`}
                     </span>
                 </div>
             )}

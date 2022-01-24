@@ -43,6 +43,11 @@
   margin: 3px 1px;
 }
 
+.team-list {
+  min-height: 10px;
+  height: 100% !important;
+}
+
 .random-select-button {
   background-color: white;
   color: var(--blue);
@@ -59,6 +64,10 @@
 
 .team-player-item span {
   padding: 0 3px;
+}
+
+.status-update-item-icon {
+  cursor: pointer;
 }
 
 .player-status-control-line {
