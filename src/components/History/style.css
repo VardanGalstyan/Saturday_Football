@@ -15,3 +15,21 @@
   width: 100%;
   padding: 10px;
 }
+
+.history-game-score {
+  width: 100%;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.history-game-score span {
+  background-color: white;
+  color: rgb(100, 99, 99);
+  padding: 5px;
+  border-radius: 2px;
+  width: 40px;
+
+}

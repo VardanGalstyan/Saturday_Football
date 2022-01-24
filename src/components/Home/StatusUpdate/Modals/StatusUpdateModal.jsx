@@ -9,6 +9,7 @@ import { fillSessionData } from '../../../../Redux/Actions/actions.js'
 import DropGameModal from './DropGameModal.jsx'
 import EndGameModal from './EndGameModal.jsx'
 import { FunctionContext } from '../CreateContext.js'
+import { ClockLoader } from "react-spinners";
 
 
 function StatusUpdateModal(props) {
@@ -173,124 +174,135 @@ function StatusUpdateModal(props) {
             centered
             className='status-update-modal'
         >
-            <Modal.Body>
-                <div className='player-status-container'>
-                    {
-                        game.players.map((player) => <TopMemberList
-                            game={game._id}
-                            player={player}
-                            key={player._id}
-                            token={token}
-                        />)
-                    }
-                </div>
-                <DragDropContext onDragEnd={onDragEnd}>
-                    <div className={`teams-divided`}>
-                        {
-                            (teamsAreConfirmed ? confirmedTeams : teams).map((team, index) => (
-                                <TeamItem
-                                    key={team.team_id}
-                                    team={team.players}
-                                    index={index}
-                                    id={team.team_id}
-                                />
-                            ))
-                        }
-                    </div>
-                </DragDropContext>
-                {
-                    !game.playing &&
-                    <div className='player-status-control-line'>
-                        <div className='d-flex'>
-                            {
-                                !teamsAreConfirmed &&
-                                <>
-                                    <div className='number-of-teams mr-1'>
-                                        <Form.Group>
-                                            <Form.Control
-                                                as="select"
-                                                size="sm"
-                                                value={teamValue}
-                                                onChange={(e) => setTeamValue(e.target.value)}
-                                            >
-                                                <option>0</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </div>
-                                    <div className='random-select-button mr-1'>
-                                        <span onClick={handleGenerate}>Generate Teams</span>
-                                    </div>
-                                </>
-                            }
-                            {
-                                teamsAreSet &&
-                                <div className='random-select-button mr-1'>
-                                    <span onClick={handleShuffle}>Shuffle</span>
-                                </div>
-                            }
-                            {
-                                (teamsAreSet || teamsAreConfirmed) &&
-                                <div className='random-select-button'>
-                                    <span
-                                        onClick={handleConfirmation}
-                                    >{!teamsAreConfirmed ? "Confirm Teams" : "Drop Teams"}</span>
-                                </div>
-                            }
-                        </div>
-                        {
-                            (teamsAreSet || teamsAreSet && !teamsAreConfirmed) &&
-                            <div>
-                                <div className='random-select-button'>
-                                    <span onClick={handleClear}>Clear</span>
-                                </div>
+            {
+                isLoading ?
+                    <div className='status-update-loader'>
+                        <ClockLoader color={"#fff"} size={25} />
+                    </div> :
+                    <>
+                        <Modal.Body>
+                            <div className='player-status-container'>
+                                {
+                                    game.players.map((player) => <TopMemberList
+                                        game={game._id}
+                                        player={player}
+                                        key={player._id}
+                                        token={token}
+                                    />)
+                                }
                             </div>
-                        }
-                    </div>
-                }
-            </Modal.Body>
-            <Modal.Footer>
-                <div>
-                    <Button
-                        className='form-button'
-                        onClick={handlePlay}
-                    >
-                        {game.playing ? "Drop" : "Play"}
-                    </Button>
-                    {
-                        game.playing &&
-                        <Button
-                            onClick={() => setEndGameModalShow(true)}
-                            className='form-button'>
-                            End game
-                        </Button>
-                    }
-                </div>
-                <Button
-                    className='form-button'
-                    onClick={handleClose}
-                >
-                    Close
-                </Button>
-            </Modal.Footer>
-            <FunctionContext.Provider value={handleClose}>
-                <DropGameModal
-                    onHide={() => setModalShow(false)}
-                    show={modalShow}
-                    game={game}
-                    token={token}
-                />
-                <EndGameModal
-                    onHide={() => setEndGameModalShow(false)}
-                    show={endGameModalShow}
-                    game={game}
-                    token={token}
-                />
-            </FunctionContext.Provider>
+                            <DragDropContext onDragEnd={onDragEnd}>
+                                <div className={`teams-divided`}>
+                                    {
+                                        (teamsAreConfirmed ? confirmedTeams : teams).map((team, index) => (
+                                            <TeamItem
+                                                key={team.team_id}
+                                                team={team.players}
+                                                index={index}
+                                                id={team.team_id}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </DragDropContext>
+                            {
+                                !game.playing &&
+                                <div className='player-status-control-line'>
+                                    <div className='d-flex'>
+                                        {
+                                            !teamsAreConfirmed &&
+                                            <>
+                                                <div className='number-of-teams mr-1'>
+                                                    <Form.Group>
+                                                        <Form.Control
+                                                            as="select"
+                                                            size="sm"
+                                                            value={teamValue}
+                                                            onChange={(e) => setTeamValue(e.target.value)}
+                                                        >
+                                                            <option>0</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                            <option>6</option>
+                                                        </Form.Control>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='random-select-button mr-1'>
+                                                    <span onClick={handleGenerate}>Generate Teams</span>
+                                                </div>
+                                            </>
+                                        }
+                                        {
+                                            teamsAreSet &&
+                                            <div className='random-select-button mr-1'>
+                                                <span onClick={handleShuffle}>Shuffle</span>
+                                            </div>
+                                        }
+                                        {
+                                            (teamsAreSet || teamsAreConfirmed) &&
+                                            <div className='random-select-button'>
+                                                <span
+                                                    onClick={handleConfirmation}
+                                                >{!teamsAreConfirmed ? "Confirm Teams" : "Drop Teams"}</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    {
+                                        (teamsAreSet || teamsAreSet && !teamsAreConfirmed) &&
+                                        <div>
+                                            <div className='random-select-button'>
+                                                <span onClick={handleClear}>Clear</span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <div>
+                                {
+                                    !teamsAreSet &&
+                                    <Button
+                                        className='form-button'
+                                        onClick={handlePlay}
+                                    >
+                                        {game.playing ? "Drop" : "Play"}
+                                    </Button>
+                                }
+                                {
+                                    game.playing &&
+                                    <Button
+                                        onClick={() => setEndGameModalShow(true)}
+                                        className='form-button'>
+                                        End game
+                                    </Button>
+                                }
+                            </div>
+                            <Button
+                                className='form-button'
+                                onClick={handleClose}
+                            >
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                        <FunctionContext.Provider value={handleClose}>
+                            <DropGameModal
+                                onHide={() => setModalShow(false)}
+                                show={modalShow}
+                                game={game}
+                                token={token}
+                            />
+                            <EndGameModal
+                                onHide={() => setEndGameModalShow(false)}
+                                show={endGameModalShow}
+                                game={game}
+                                token={token}
+                            />
+                        </FunctionContext.Provider>
+                    </>
+            }
         </Modal >
     )
 }

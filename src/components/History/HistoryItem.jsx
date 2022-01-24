@@ -28,6 +28,9 @@ function HistoryItem({ game }) {
             <div className='active-game-location'>
                 <span>{game.session_location}</span>
             </div>
+            <div className='history-game-score'>
+                <span>{game.teams[0].score}</span> : <span> {game.teams[1].score}</span>
+            </div>
             <div className='active-game-created-by'>
                 <div className='active-game-players'>
                     <div className='active-game-badges'>
