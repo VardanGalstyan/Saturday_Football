@@ -23,6 +23,7 @@ function CreateGameModal(props) {
 
     useEffect(() => {
         setData(initialState)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [game && game])
 
     const token = localStorage.getItem('footballAccessToken');
@@ -119,8 +120,8 @@ function CreateGameModal(props) {
                                             <span
                                                 onClick={() => setData({ ...data, session_location: location.location_name })}
                                                 key={location._id}
-                                                className='location-list-item'
-                                                key={location._id}>{location.location_name}
+                                                className='location-list-item'>
+                                                {location.location_name}
                                             </span>
                                         ))}
                                     </span>

@@ -241,21 +241,21 @@ function StatusUpdateModal(props) {
                                             </div>
                                         }
                                         {
-                                            (teamsAreSet || teamsAreConfirmed) &&
-                                            <div className='random-select-button'>
-                                                <span
-                                                    onClick={handleConfirmation}
-                                                >{!teamsAreConfirmed ? "Confirm Teams" : "Drop Teams"}</span>
-                                            </div>
+                                            (teamsAreSet || teamsAreConfirmed) ?
+                                                <div className='random-select-button'>
+                                                    <span
+                                                        onClick={handleConfirmation}
+                                                    >{!teamsAreConfirmed ? "Confirm Teams" : "Drop Teams"}</span>
+                                                </div> : null
                                         }
                                     </div>
                                     {
-                                        (teamsAreSet || teamsAreSet && !teamsAreConfirmed) &&
-                                        <div>
-                                            <div className='random-select-button'>
-                                                <span onClick={handleClear}>Clear</span>
-                                            </div>
-                                        </div>
+                                        (teamsAreSet || teamsAreSet ? !teamsAreConfirmed : null) ?
+                                            <div>
+                                                <div className='random-select-button'>
+                                                    <span onClick={handleClear}>Clear</span>
+                                                </div>
+                                            </div> : null
                                     }
                                 </div>
                             }
