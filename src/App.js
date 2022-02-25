@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './App.css';
 import Home from './components/Home/Home';
@@ -23,8 +23,10 @@ function App() {
     dispatch(fillLocationsData())
     dispatch(fillHistoryData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
+
+  console.log(token);
 
   return (
     <div className="football-app">
@@ -36,7 +38,6 @@ function App() {
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="*" element={<Navigate to={token ? '/' : 'login'} />} />
       </Routes>
     </div >
   );
