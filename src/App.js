@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './App.css';
@@ -10,11 +10,16 @@ import History from './components/History/History';
 import PrivateRoute from './components/onboarding/PrivateRoute';
 import { fillHistoryData, fillLocationsData, fillPlayersDataAction, fillSessionData, fillUserData } from './Redux/Actions/actions';
 
+export const UserContext = createContext();
+
 
 function App() {
 
-  const token = localStorage.getItem('footballAccessToken');
+
   const dispatch = useDispatch();
+  const lsToken = localStorage.getItem('footballAccessToken');
+  const [token, setToken] = useState(lsToken);
+
 
   useEffect(() => {
     dispatch(fillSessionData())
@@ -27,16 +32,18 @@ function App() {
 
   return (
     <div className="football-app">
-      <TopNavbar />
-      <Routes>
-        <Route element={<PrivateRoute token={token} />} >
-          <Route path="history" element={<History />} />
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="*" element={<Navigate to={token !== null ? '/' : 'login'} />} />
-      </Routes>
+      <UserContext.Provider value={{ token, setToken }}>
+        <TopNavbar />
+        <Routes>
+          <Route element={<PrivateRoute user={token} />}>
+            <Route path='/' element={<Home />} />
+            <Route path="history" element={<History />} />
+          </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="*" element={<Navigate to={token ? '/' : 'login'} />} />
+        </Routes>
+      </UserContext.Provider>
     </div >
   );
 }

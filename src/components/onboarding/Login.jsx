@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../../App';
 import { ClockLoader } from "react-spinners";
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Col } from 'react-bootstrap'
 import { RiErrorWarningFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
-import { fillUserData, fillSessionData } from '../../Redux/Actions/actions';
+import { fillUserData } from '../../Redux/Actions/actions';
 
 
 function Login() {
 
+    const { token, setToken } = useContext(UserContext);
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -37,9 +39,9 @@ function Login() {
                 const data = await response.json();
                 localStorage.setItem('footballAccessToken', data.accessToken);
                 setLoading(false)
-                dispatch(fillSessionData())
-                dispatch(fillUserData(data.accessToken))
+                setToken(data.accessToken)
                 navigate('/')
+                dispatch(fillUserData(data.accessToken))
             } else {
                 setError(true)
                 setLoading(false)
