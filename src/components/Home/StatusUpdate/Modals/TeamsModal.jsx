@@ -2,9 +2,8 @@ import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { IoShirtSharp } from 'react-icons/io5'
 
-function TeamsModal(props) {
+function TeamsModal({ game, ...props }) {
 
-    const { game } = props
 
     return (
         <Modal
@@ -17,7 +16,7 @@ function TeamsModal(props) {
             <Modal.Body>
                 <div className='teams-confirmed players-joined'>
                     {
-                        game.teams.length > 0 ? game.teams.map(team => (
+                        game?.teams?.length > 0 ? game?.teams?.map(team => (
                             <div key={team.team_id} className='single-team-confirmed'>
                                 <span >{`Team ${team.team_id}`}</span>
                                 <div className='single-team-players'>
