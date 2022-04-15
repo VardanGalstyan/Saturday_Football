@@ -43,6 +43,11 @@
   margin: 3px 1px;
 }
 
+.team-list {
+  min-height: 10px;
+  height: 100% !important;
+}
+
 .random-select-button {
   background-color: white;
   color: var(--blue);
@@ -59,6 +64,10 @@
 
 .team-player-item span {
   padding: 0 3px;
+}
+
+.status-update-item-icon {
+  cursor: pointer;
 }
 
 .player-status-control-line {
@@ -85,6 +94,13 @@
 
 .status-update-modal .modal-footer .form-button {
   color: white;
+}
+
+.status-update-loader {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .teams-confirmed {
@@ -116,5 +132,25 @@
 }
 
 .team-purple svg {
-  color: blueviolet;
+  color: turquoise;
+}
+
+.active-game-delete-modal-score-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.active-game-delete-modal-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.active-game-delete-modal-score input {
+  width: 100%;
 }

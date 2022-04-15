@@ -63,6 +63,10 @@ export const fillSessionData = () => {
     return async (dispatch, getState) => {
 
         try {
+            dispatch({
+                type: FILL_SESSION_DATA_LOADING,
+                payload: true
+            })
             let response = await fetch(`${process.env.REACT_APP_URL}/sessions`)
             if (response.ok) {
                 let data = await response.json()

@@ -9,7 +9,9 @@ function History() {
 
     return (
         <div className='history'>
-            {history.map(item => <HistoryItem game={item.session} key={item._id} />)}
+            <div className='history-wrapper'>
+                {history?.sort((a, b) => new Date(b.session.session_date) - new Date(a.session.session_date)).map(item => <HistoryItem game={item.session} key={item._id} />)}
+            </div>
         </div>
     )
 }

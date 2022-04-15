@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import atob from 'atob'
 import EditProfileModal from './EditProfileModal'
 import { Container, Navbar, Nav } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
@@ -16,14 +17,25 @@ function TopNavbar() {
 
     const handleLogout = () => {
         localStorage.removeItem('footballAccessToken')
-        navigate('/login')
+        navigate('/register')
     }
+
+    const isTokenExpired = token => Date.now() >= (JSON.parse(atob(token.split('.')[1]))).exp * 1000
+
+
+    useEffect(() => {
+        if (token && isTokenExpired(token)) {
+            handleLogout()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
 
     const handleNavbarActions = (e) => {
         const text = e.target.innerText
         setIsExpended(!isExpended)
         if (text === 'ACTIVE GAMES') {
-            navigate('/home')
+            navigate('/')
         } else if (text === 'HISTORY') {
             navigate('/history')
         } else if (text === 'Edit Profile') {
@@ -50,7 +62,7 @@ function TopNavbar() {
                 fixed='top'
                 onToggle={() => setIsExpended(!isExpended)}
             >
-                <Navbar.Brand onClick={() => navigate(token ? 'home' : 'login')}>{token && data.full_name ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate(token ? '/' : 'login')}>{token && data.full_name ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
