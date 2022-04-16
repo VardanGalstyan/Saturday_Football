@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import atob from 'atob'
-import EditProfileModal from './EditProfileModal'
+import './style.css'
+import { useState, useEffect, useCallback } from 'react'
 import { Container, Navbar, Nav } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import './style.css'
+import atob from 'atob'
+import EditProfileModal from './EditProfileModal'
 
 function TopNavbar() {
 
@@ -15,10 +15,10 @@ function TopNavbar() {
     const [showModal, setShowModal] = useState(false)
     const [isExpended, setIsExpended] = useState(false)
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         localStorage.removeItem('footballAccessToken')
         navigate('/register')
-    }
+    }, [navigate])
 
     const isTokenExpired = token => Date.now() >= (JSON.parse(atob(token.split('.')[1]))).exp * 1000
 
@@ -30,67 +30,40 @@ function TopNavbar() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
-    const handleNavbarActions = (e) => {
-        const text = e.target.innerText
-        setIsExpended(!isExpended)
-        if (text === 'ACTIVE GAMES') {
-            navigate('/')
-        } else if (text === 'HISTORY') {
-            navigate('/history')
-        } else if (text === 'Edit Profile') {
-            setShowModal(true)
-        } else if (text === 'LOG OUT') {
-            handleLogout()
-        } else if (text === 'Sign up') {
-            navigate('/register')
-        } else if (text === 'Sign in') {
-            navigate('/login')
-        }
-
-    }
+    useEffect(() => {
+        isExpended && setIsExpended(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [navigate])
 
 
     return (
         <Container className='navbar-container' fluid>
-            <Navbar
-                collapseOnSelect
-                expanded={isExpended}
-                expand="lg"
-                bg="dark"
-                variant="dark"
-                fixed='top'
-                onToggle={() => setIsExpended(!isExpended)}
-            >
+            <Navbar collapseOnSelect expanded={isExpended} expand="lg" bg="dark" variant="dark" fixed='top' onToggle={() => setIsExpended(!isExpended)}>
                 <Navbar.Brand onClick={() => navigate(token ? '/' : 'login')}>{token && data.full_name ? `Welcome ${data.full_name}` : `welcome`}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         {token &&
                             <>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>ACTIVE GAMES</Nav.Link>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>HISTORY</Nav.Link>
+                                <Nav.Link onClick={() => navigate('/')}>ACTIVE GAMES</Nav.Link>
+                                <Nav.Link onClick={() => navigate('history')}>HISTORY</Nav.Link>
                             </>
                         }
                     </Nav>
                     <Nav>
                         {token ?
                             <>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>Edit Profile</Nav.Link>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>LOG OUT</Nav.Link>
+                                <Nav.Link onClick={() => setShowModal(true)}>Edit Profile</Nav.Link>
+                                <Nav.Link onClick={handleLogout}>LOG OUT</Nav.Link>
                             </> :
                             <>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>Sign in</Nav.Link>
-                                <Nav.Link onClick={(e) => handleNavbarActions(e)}>Sign up</Nav.Link>
+                                <Nav.Link onClick={(e) => navigate('login')}>Sign in</Nav.Link>
+                                <Nav.Link onClick={(e) => navigate('register')}>Sign up</Nav.Link>
                             </>
                         }
                     </Nav>
                 </Navbar.Collapse>
-                <EditProfileModal
-                    show={showModal}
-                    onHide={() => setShowModal(false)}
-                    data={data}
-                />
+                <EditProfileModal show={showModal} onHide={() => setShowModal(false)} data={data} />
             </Navbar>
         </Container>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { ClockLoader } from "react-spinners";
 import { Modal, Form, Col, Button } from 'react-bootstrap'
 import { RiErrorWarningFill } from 'react-icons/ri'
@@ -13,10 +13,13 @@ function EditProfileModal(props) {
     const token = localStorage.getItem('footballAccessToken');
     const dispatch = useDispatch()
 
-    const initialState = {
-        full_name: data ? data.full_name : '',
-        email: data ? data.email : '',
-    }
+
+    const initialState = useMemo(() => {
+        return {
+            full_name: data ? data.full_name : '',
+            email: data ? data.email : '',
+        }
+    }, [data])
 
     const [editData, setEditData] = useState(initialState)
     const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +28,7 @@ function EditProfileModal(props) {
     useEffect(() => {
         setEditData(initialState)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.data])
+    }, [data])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -55,14 +58,14 @@ function EditProfileModal(props) {
         }
     }
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         props.onHide()
         setEditData(initialState)
-    }
+    }, [initialState, props])
 
-    const handleError = () => {
+    const handleError = useCallback(() => {
         setError(false)
-    }
+    }, [])
 
 
     return (
